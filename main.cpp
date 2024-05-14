@@ -1,4 +1,6 @@
-#include "sort.hpp"
+//trets du git noémie cours pas si vite
+//sinon elle serait au JO ou  au europe     hahahaah ca marche 
+#include "sort.hpp" 
 #include "tour.hpp"
 #include "joueur.hpp"
 #include "perso.hpp"
