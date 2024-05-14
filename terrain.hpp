@@ -21,6 +21,7 @@ class Terrain{
         void effet_sort();
         void boucle_action(int n);
         void sort_units_by_position();
+        void ajout_units();
 
         
         std::vector<Perso> units;

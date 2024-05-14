@@ -5,6 +5,7 @@
 #include "perso.hpp"
 #include <iostream>
 #include <algorithm>
+
 using namespace std;
 
 Terrain::Terrain(Joueur & joueurG,Joueur & joueurD){
@@ -158,4 +159,8 @@ void Terrain::boucle_action(int n){
         verification_pv();
         afficher();
     }
+}
+
+void Terrain::ajout_units(){
+    
 }

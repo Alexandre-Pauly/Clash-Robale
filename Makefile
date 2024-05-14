@@ -1,4 +1,4 @@
-all: main 
+all: main affichage
 
 main: main.o perso.o terrain.o joueur.o sort.o tour.o
 	g++ -Wall -o main  main.o perso.o terrain.o joueur.o sort.o tour.o
@@ -29,4 +29,4 @@ affichage: affichage.cpp
 clean:
 	rm -f *.o 
 vclean: clean
-	rm -f main
+	rm -f main affichage
