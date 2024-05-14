@@ -20,7 +20,10 @@ joueur.o: joueur.cpp joueur.hpp
 
 
 main.o: main.cpp perso.hpp terrain.hpp joueur.hpp sort.hpp tour.hpp
-	g++ -Wall -c main.cpp 
+	g++ -Wall -c main.cpp
+
+affichage.o: affichage.cpp
+	g++ affichage.cpp -o affichage -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 
 clean:
