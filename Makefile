@@ -1,6 +1,6 @@
 all: main affichage
 
-main: main.o perso.o terrain.o joueur.o sort.o tour.o
+main: perso.o terrain.o joueur.o sort.o tour.o main.o
 	g++ -Wall -o main  main.o perso.o terrain.o joueur.o sort.o tour.o
 
 perso.o: perso.cpp perso.hpp tour.hpp joueur.hpp

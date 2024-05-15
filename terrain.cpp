@@ -7,6 +7,7 @@
 #include <algorithm>
 
 using namespace std;
+std::vector<ajout_troupe_sort> tableau_ajout;
 
 Terrain::Terrain(Joueur & joueurG,Joueur & joueurD){
     _joueurD=&joueurD;
@@ -21,13 +22,13 @@ void Terrain::sort_units_by_position() {
 }
 
 
-void Terrain::utilisation_sort(Sort &s){
-    sort.push_back(s);
+void Terrain::utilisation_sort(Sort *s){
+    sort.push_back(*s);
 }
 
-void Terrain::spawn_perso(Perso &p,int pos){
-    p.add_position(pos);
-    units.push_back(p);
+void Terrain::spawn_perso(Perso *p,int pos){
+    p->add_position(pos);
+    units.push_back(*p);
 }
 
 
@@ -162,5 +163,36 @@ void Terrain::boucle_action(int n){
 }
 
 void Terrain::ajout_units(){
-    
+    for ( auto it = begin (tableau_ajout); it != end (tableau_ajout); ) {
+        switch (it->nom)
+        {
+        case 'P':
+            spawn_perso(new Pekka(it->joueur),it->position);
+            break;
+        case 'G':
+            spawn_perso(new Geant(it->joueur),it->position);
+            
+            break;
+        case 'I':
+            spawn_perso(new Infentrie(it->joueur),it->position);
+            
+            break;
+        case 'S':
+            utilisation_sort(new Soin(it->joueur,it->position));
+            
+            break;
+        case 'M':
+            utilisation_sort(new Poison(it->joueur,it->position));
+            
+            break;
+        case 'B':
+            utilisation_sort(new Boule_de_feu(it->joueur,it->position));
+            
+            break;
+        
+        
+        default:
+            throw runtime_error("erreur ajout des personnages");
+        }
+    }
 }

@@ -1,5 +1,3 @@
-//trets du git noémie cours pas si vite
-//sinon elle serait au JO ou  au europe     hahahaah ca marche 
 #include "sort.hpp" 
 #include "tour.hpp"
 #include "joueur.hpp"
@@ -39,9 +37,9 @@ int main() {
     //terrain.utilisation_sort(Boule_de_feu);
     //terrain.utilisation_sort(Poison);
     //terrain.spawn_perso(Infentrie,28);
-    terrain.spawn_perso(Pekka,15);
-    terrain.spawn_perso(Geant,20);
-    terrain.spawn_perso(Infentrie,28);
+    terrain.spawn_perso(&Pekka,15);
+    terrain.spawn_perso(&Geant,20);
+    terrain.spawn_perso(&Infentrie,28);
 
     terrain.afficher();
     terrain.boucle_action(4);
