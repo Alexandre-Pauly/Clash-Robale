@@ -14,7 +14,7 @@ int main() {
     auto start = std::chrono::high_resolution_clock::now();
 
     // Votre code ici
-    
+    std::vector<ajout_troupe_sort> tableau_ajout;
     char str[50]="gauche";
     Tour *T1=new Tour;
     Tour *T2=new Tour;
@@ -25,7 +25,7 @@ int main() {
 
     
     //terrain.afficher();
-    terrain.boucle_action(4);
+    //terrain.boucle_action(4);
 
     // Fin du chrono
     auto end = std::chrono::high_resolution_clock::now();

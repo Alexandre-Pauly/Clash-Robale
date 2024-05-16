@@ -17,6 +17,7 @@ class Perso{
 
     void effet_pv(int pv){if(pv+_pv<_pv_max)_pv+=pv; else _pv=_pv_max;}
     int get_pv()const{return _pv;}
+    int get_pv_max()const{return _pv_max;}
     void set_pv(int pv){_pv = pv;}
     int get_joueur()const{return _joueur;}
     int get_vitesse()const{return _vitesse;}

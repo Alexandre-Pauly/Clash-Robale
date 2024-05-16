@@ -5,6 +5,9 @@
 #include "perso.hpp"
 #include <iostream>
 #include <algorithm>
+#include <thread>
+#include <chrono>
+#include <mutex>
 
 using namespace std;
 std::vector<ajout_troupe_sort> tableau_ajout;
@@ -147,18 +150,37 @@ void Terrain::effet_sort(){
 }
 
 
-
-
-void Terrain::boucle_action(int n){
+void Terrain::boucle_action(mutex * lock_unit, mutex * lock_perso){
     //ajout perso sort?
-    for (int i=0; i<n;i++)
+    while ((_joueurD->_tour->get_pv()>0)&&(_joueurG->_tour->get_pv()>0))
     {
+        lock_unit->lock();
+        ajout_units();
+        lock_unit->unlock();
+        lock_perso->lock();
         effet_sort();
         verification_pv();
         deplacement();
         attaque();
         verification_pv();
-        afficher();
+        lock_perso->unlock();
+        //afficher();
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    }
+}
+
+void Terrain::boucle_action(int n, mutex * lock_unit, mutex * lock_perso){
+    //ajout perso sort?
+    for (int i=0; i<n;i++)
+    {
+        ajout_units();
+        effet_sort();
+        verification_pv();
+        deplacement();
+        attaque();
+        verification_pv();
+        //afficher();
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
 }
 
@@ -181,7 +203,7 @@ void Terrain::ajout_units(){
             utilisation_sort(new Soin(it->joueur,it->position));
             
             break;
-        case 'M':
+        case 'T':
             utilisation_sort(new Poison(it->joueur,it->position));
             
             break;

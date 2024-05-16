@@ -7,6 +7,9 @@
 #include "perso.hpp"
 #include "terrain.hpp"
 #include <chrono>
+#include <thread>
+#include <mutex>
+
 using namespace std;
 
 // truc a faire, pour faire un projet plus propre
@@ -17,7 +20,7 @@ using namespace std;
 //azzi c'est long eft j'ai plein de taf.
 // fonction manque d'elexir
 
-int affichage(Terrain* terrain)
+int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
 {
     sf::RenderWindow window(sf::VideoMode(1920,1080), "Clash Robal !");
     int hz = 144;
@@ -376,7 +379,7 @@ int affichage(Terrain* terrain)
         window.draw(sfleche1);
         sfleche2.setPosition(sf::Vector2f(160 + position_J2*(1500/Nombre_de_case),920));
         window.draw(sfleche2);
-
+    std::vector<ajout_troupe_sort> tableau_ajout;
         //les sorts
         //boule de feu
         //affichage des Boules de feu
@@ -467,7 +470,12 @@ int main(){
     char str2[50]="droite";
     Joueur joueurD(str2,*T2);
     Terrain terrain(joueurG,joueurD);
+    mutex lock_unit, lock_perso;
 
-    affichage(&terrain);
+    thread t1(affichage,&terrain,&lock_unit,&lock_perso);
+    terrain.boucle_action(10,&lock_unit,&lock_perso);
+    t1.join();
+    
+
     return 0;
 }

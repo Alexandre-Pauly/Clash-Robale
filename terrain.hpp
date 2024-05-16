@@ -1,6 +1,7 @@
 #ifndef TERRAIN
 #define TERRAIN
 #include <vector>
+#include <mutex>
 
 
 class Perso;
@@ -28,9 +29,10 @@ class Terrain{
         void spawn_perso(Perso *p,int pos);
         void utilisation_sort(Sort *s);
         void effet_sort();
-        void boucle_action(int n);
+        void boucle_action(int n, std::mutex * lock_unit, std::mutex * lock_perso);
         void sort_units_by_position();
         void ajout_units();
+        void boucle_action(std::mutex * lock_unit, std::mutex * lock_perso);
 
         
         std::vector<Perso> units;
