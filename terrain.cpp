@@ -168,6 +168,7 @@ void Terrain::effet_sort(){
 
 
 void Terrain::boucle_action(mutex * lock_unit, mutex * lock_perso){
+    int cpt=0;
     //ajout perso sort?
     while ((_joueurD->_tour->get_pv()>0)&&(_joueurG->_tour->get_pv()>0))
     {
@@ -178,28 +179,20 @@ void Terrain::boucle_action(mutex * lock_unit, mutex * lock_perso){
         effet_sort();
         verification_pv();
         deplacement();
-        attaque();
+        if (cpt==10)
+        {
+            attaque();
+            cpt=0;
+        }
         verification_pv();
         lock_perso->unlock();
         //afficher();
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
+        cpt++;
+
     }
 }
 
-void Terrain::boucle_action(int n, mutex * lock_unit, mutex * lock_perso){
-    //ajout perso sort?
-    for (int i=0; i<n;i++)
-    {
-        ajout_units();
-        effet_sort();
-        verification_pv();
-        deplacement();
-        attaque();
-        verification_pv();
-        //afficher();
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    }
-}
 
 void Terrain::ajout_units(){
     cout<<tableau_ajout.size()<<endl;
