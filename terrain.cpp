@@ -182,7 +182,7 @@ void Terrain::boucle_action(mutex * lock_unit, mutex * lock_perso){
         verification_pv();
         lock_perso->unlock();
         //afficher();
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }
 
@@ -197,7 +197,7 @@ void Terrain::boucle_action(int n, mutex * lock_unit, mutex * lock_perso){
         attaque();
         verification_pv();
         //afficher();
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }
 

@@ -173,7 +173,7 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
         return -1; // error
     mTheme.play();
     mTheme.setLoop(true);
-    int Nombre_de_case = 30 ;
+    int Nombre_de_case = NB_CASE ;
     int position_J1 = 0;
     int position_J2 = Nombre_de_case -1;
 

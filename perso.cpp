@@ -4,8 +4,8 @@
 #include <iostream>
 
 Geant::Geant(int joueur){
-    _pv = 20; 
-    _pv_max = 20;
+    _pv = 200; 
+    _pv_max = 200;
     _degat = -4;
     _vitesse = 2;
     _joueur = joueur;
@@ -15,8 +15,8 @@ Geant::Geant(int joueur){
 }
 
 Geant::Geant(const Joueur &joueur){
-    _pv = 20; 
-    _pv_max = 20;
+    _pv = 200; 
+    _pv_max = 200;
     _degat = -4;
     _vitesse = 2;
     _joueur = joueur.get_nb_joueur();
@@ -28,8 +28,8 @@ Geant::Geant(const Joueur &joueur){
 
 
 Pekka::Pekka(int joueur){
-    _pv = 10;
-    _pv_max = 10;
+    _pv = 100;
+    _pv_max = 100;
     _degat = -6;
     _vitesse = 4;
     _joueur = joueur;
@@ -38,8 +38,8 @@ Pekka::Pekka(int joueur){
     _nom='P';
 }
 Pekka::Pekka(const Joueur &joueur){
-    _pv = 10;
-    _pv_max = 10;
+    _pv = 100;
+    _pv_max = 100;
     _degat = -6;
     _vitesse = 4;
     _joueur = joueur.get_nb_joueur();
@@ -51,8 +51,8 @@ Pekka::Pekka(const Joueur &joueur){
 
 
 Infentrie::Infentrie(int joueur){
-    _pv = 8;
-    _pv_max = 8;
+    _pv = 80;
+    _pv_max = 80;
     _degat = -4;
     _vitesse = 3;
     _joueur = joueur;
@@ -62,8 +62,8 @@ Infentrie::Infentrie(int joueur){
 }
 
 Infentrie::Infentrie(const Joueur &joueur){
-    _pv = 8;
-    _pv_max = 8;
+    _pv = 80;
+    _pv_max = 80;
     _degat = -4;
     _vitesse = 3;
     _joueur = joueur.get_nb_joueur();

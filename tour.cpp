@@ -4,7 +4,7 @@
 
 Tour::Tour(){
     _range = 6;
-    _pv = 125;
+    _pv = 600;
     _degat = -4;
 }
 
