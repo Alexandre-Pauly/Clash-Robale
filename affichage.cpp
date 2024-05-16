@@ -41,6 +41,7 @@ int affichage(Terrain* terrain)
     sf::Texture fond_elexir;
     sf::Texture telexir;
     sf::Texture geant;
+    sf::Texture geant2;
     
     //Chargement des textures du jeu
     fond.loadFromFile("element_fixe/fond.jpg", sf::IntRect(0,0, 1920,1080));
@@ -63,7 +64,10 @@ int affichage(Terrain* terrain)
     vie_tour_jaune.loadFromFile("vie_tour/jaune.png", sf::IntRect(0,0,215,39));
     vie_tour_orange.loadFromFile("vie_tour/orange.png", sf::IntRect(0,0,215,39));
     vie_tour_rouge.loadFromFile("vie_tour/rouge.png", sf::IntRect(0,0,215,39));
-    geant.loadFromFile("perso/geant.png");
+    
+
+    geant.loadFromFile("perso/geant/walking.png");
+    geant2.loadFromFile("perso/geant/walking2.png");
     //Creation des sprites des elements graphiques
     sf::Sprite sfond;
     sfond.setTexture(fond);
@@ -156,6 +160,9 @@ int affichage(Terrain* terrain)
     sf::Sprite sgeant;
     sgeant.setTexture(geant);
 
+    sf::Sprite sgeant2;
+    sgeant2.setTexture(geant2);
+
 
 
     sf::Music mTheme;
@@ -163,7 +170,7 @@ int affichage(Terrain* terrain)
         return -1; // error
     mTheme.play();
     mTheme.setLoop(true);
-    int Nombre_de_case = 1500 ;
+    int Nombre_de_case = 30 ;
     int position_J1 = 0;
     int position_J2 = Nombre_de_case -1;
 
@@ -194,7 +201,7 @@ int affichage(Terrain* terrain)
     int poison [4][2];
     for (int k=0;k<4;k++){
         for (int j=0;j<2;j++){
-            poison[k][j]= 4*hz;
+            poison[k][j]= 6*120;
         }
     }
 
@@ -211,7 +218,6 @@ int affichage(Terrain* terrain)
         sf::Event event;
         while (window.pollEvent(event))
         {
-
             if (event.type == sf::Event::Closed)
                 window.close();
             if (event.type == sf::Event::KeyPressed){
@@ -241,6 +247,7 @@ int affichage(Terrain* terrain)
                     std::cout<< position_J2 <<std::endl;
                     }
                 }
+
                 // comme ca je peux tester si ca marche
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
                     if (pvJ1>0){
@@ -250,6 +257,101 @@ int affichage(Terrain* terrain)
                     if (pvJ2>0){
                     pvJ2--;
                     }}
+
+                //////////////////////////
+                //spawn des troupes
+                //////////////////////////
+                ///joueur 1 
+                // infentrie
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+                    if(elexir1>3){
+                        if (position_J1<=Nombre_de_case/3){
+                            elexir1-=3;
+                            ajout_troupe_sort i;
+                            i.nom = 'i';
+                            i.joueur = 0;
+                            i.position = position_J1;
+                            tableau_ajout.push_back(i);
+                            }
+                    }
+                }
+                //pekka
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
+                    if(elexir1>3){
+                        if (position_J1<=Nombre_de_case/3){
+                            elexir1-=3;
+                            ajout_troupe_sort p;
+                            p.nom = 'p';
+                            p.joueur = 0;
+                            p.position = position_J1;
+                            tableau_ajout.push_back(p);
+                            
+                            }
+                    }
+                }
+                //geant
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
+                    if(elexir1>4){
+                        if (position_J1<=Nombre_de_case/3){
+                            elexir1-=4;
+                            ajout_troupe_sort g;
+                            g.nom = 'g';
+                            g.joueur = 0;
+                            g.position = position_J1;
+                            tableau_ajout.push_back(g);
+                            
+                            }
+                    }
+                }
+                ///////// Troupe joueur 2
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::U)){
+                    if(elexir2>3){
+                        if (position_J2>=(Nombre_de_case*2)/3){
+                            elexir2-=3;
+                            ajout_troupe_sort i;
+                            i.nom = 'i';
+                            i.joueur = 1;
+                            i.position = position_J2;
+                            tableau_ajout.push_back(i);
+                            }
+                    }
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)){
+                    if(elexir2>3){
+                        if (position_J2<=(2*Nombre_de_case)/3){
+                            elexir2-=3;
+                            ajout_troupe_sort p;
+                            p.nom = 'p';
+                            p.joueur = 1;
+                            p.position = position_J2;
+                            tableau_ajout.push_back(p);
+                            
+                            }
+                    }
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::O)){
+                    if(elexir2>4){
+                        if (position_J2<=(2*Nombre_de_case)/3){
+                            elexir2-=4;
+                            ajout_troupe_sort g;
+                            g.nom = 'g';
+                            g.joueur = 1;
+                            g.position = position_J2;
+                            tableau_ajout.push_back(g);
+                            
+                            }
+                    }
+                }
+
+
+
+
+
+
+
+                ////////////////////////
+                /////////spawn des sorts
+                ///////////////////////
                 // detection des Boule de feu
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
                     if(elexir1>4){
@@ -370,7 +472,7 @@ int affichage(Terrain* terrain)
         window.draw(svt1);
         window.draw(svt2);
 
-        // les objets qui bougent
+        ////////////////les objets qui bougent
         //les fleches 
         sfleche1.setPosition(sf::Vector2f(160 + position_J1*(1500/Nombre_de_case),920));
         window.draw(sfleche1);
@@ -382,7 +484,6 @@ int affichage(Terrain* terrain)
         //affichage des Boules de feu
         for (int k=0;k<4;k++){
             if (BDF[k][1]>0){
-                std::cout<< "cd bdf" << BDF[k][1] <<std::endl;
                 sbdf.setTextureRect(sf::IntRect(153*(BDF[k][1]%6),0,153,154));
                 sbdf.setPosition(sf::Vector2f(313 + BDF[k][0]*(1500/Nombre_de_case),774-BDF[k][1]*8));
                 window.draw(sbdf);
@@ -395,7 +496,6 @@ int affichage(Terrain* terrain)
         // affichage du sort de heal
         for (int k=0;k<4;k++){
             if (heal[k][1]<4*hz){
-                std::cout<< "temps de heal =" << float(heal[k][1])/float(hz) <<std::endl;
                 if (heal[k][1]<100){
                     sheal.setTextureRect(sf::IntRect(192*(int(heal[k][1]/10)%5),130*(int(heal[k][1]/50)%2),183,167));
                     sheal.setPosition(sf::Vector2f(154 + heal[k][0]*(1500/Nombre_de_case),760-(int(heal[k][1]/50)%2)*60));}
@@ -414,9 +514,7 @@ int affichage(Terrain* terrain)
                 }
             }
         for (int k=0;k<4;k++){
-            if (poison[k][1]<6*120){
-                std::cout<< "temps de poison=" << float(poison[k][1])/float(hz) <<std::endl;
-                
+            if (poison[k][1]<6*120){              
                 spoison.setTextureRect(sf::IntRect(110*(int(poison[k][1]/20)%6),150*(int(poison[k][1]/120)%2),110,122));
                 spoison.setPosition(sf::Vector2f(160 + poison[k][0]*(1500/Nombre_de_case),700));
                 window.draw(spoison);
@@ -426,22 +524,36 @@ int affichage(Terrain* terrain)
                 }
                 }
             }
-        /*
-        n = sizeof(terrain.units)
+        //////////////// affichage des personnages 
+
+        int n = sizeof(terrain->units);
         for (int k=0;k<n;k++){
-            if (terrain.units[k].get_nom() == "g"){
-                sheal.setTextureRect(sf::IntRect(192*(int(heal[k][1]/10)%5),130*(int(heal[k][1]/50)%2),183,167));
-                sheal.setPosition(sf::Vector2f(154 + heal[k][0]*(1500/Nombre_de_case),760-(int(heal[k][1]/50)%2)*60));
+            //affichage des geants
+            if (terrain->units[k].get_nom() == 'G'){
+                if (terrain->units[k].get_joueur()==1){
+                sgeant.setTextureRect(sf::IntRect(202*((compteur/10)%5),184*((compteur/50)%8),202,184));
+                sgeant.setPosition(sf::Vector2f(154 + terrain->units[k].get_position()*(1500/Nombre_de_case),650));
+                window.draw(sgeant);
+                }
+                else {
+                    sgeant2.setTextureRect(sf::IntRect(808- 202*((compteur/10)%5),184*((compteur/50)%8),202,184));
+                    sgeant2.setPosition(sf::Vector2f(154 + terrain->units[k].get_position()*(1500/Nombre_de_case),650));
+                    std::cout<< terrain->units[k].get_position()<<std::endl;
+                    
+                    window.draw(sgeant2);}
+
+                }
+
                 
-            }
-            if (terrain.units[k].get_nom() == "i"){
+            
+            //affichage des infentries
+            if (terrain->units[k].get_nom() == 'i'){
 
             }
-            if (terrain.units[k].get_nom() == "p"){
-
+            if (terrain->units[k].get_nom() == 'p'){
             }
         }
-        */
+        
         
 
 
@@ -467,6 +579,10 @@ int main(){
     char str2[50]="droite";
     Joueur joueurD(str2,*T2);
     Terrain terrain(joueurG,joueurD);
+    Geant geant(joueurD);
+    Geant geant2(joueurG);
+    terrain.spawn_perso(&geant,0);
+    terrain.spawn_perso(&geant2,29);
 
     affichage(&terrain);
     return 0;

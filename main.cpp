@@ -22,9 +22,26 @@ int main() {
     char str2[50]="droite";
     Joueur joueurD(str2,*T2);
     Terrain terrain(joueurG,joueurD);
+    Pekka Pekka(joueurD);
+    Geant Geant(joueurG);
+    Infentrie Infentrie(joueurD);
 
-    
-    //terrain.afficher();
+
+
+    Boule_de_feu Boule_de_feu(joueurD,11);
+    Poison Poison(0,10);
+    Soin soin(joueurD,12);
+
+
+
+    //terrain.utilisation_sort(Boule_de_feu);
+    //terrain.utilisation_sort(Poison);
+    //terrain.spawn_perso(Infentrie,28);
+    terrain.spawn_perso(&Pekka,15);
+    terrain.spawn_perso(&Geant,20);
+    terrain.spawn_perso(&Infentrie,28);
+
+    terrain.afficher();
     terrain.boucle_action(4);
 
     // Fin du chrono
