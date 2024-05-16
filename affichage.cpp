@@ -22,7 +22,7 @@ using namespace std;
 
 int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
 {
-    sf::RenderWindow window(sf::VideoMode(1920,1080), "Clash Robal !");
+    sf::RenderWindow window(sf::VideoMode(1920,1080), "Clash Robale !");
     int hz = 144;
     window.setFramerateLimit(hz);
     sf::Texture fond;
@@ -45,6 +45,8 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
     sf::Texture telexir;
     sf::Texture geant;
     sf::Texture geant2;
+    sf::Texture pv_mob;
+    sf::Texture fpv_mob;
     
     //Chargement des textures du jeu
     fond.loadFromFile("element_fixe/fond.jpg", sf::IntRect(0,0, 1920,1080));
@@ -62,6 +64,8 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
     fond_vie_tour.loadFromFile("vie_tour/fond.png", sf::IntRect(0,0,215,39));
     fond_elexir.loadFromFile("barre_elexir/elexir_empty.png");
     telexir.loadFromFile("barre_elexir/elexir_full.png");
+    pv_mob.loadFromFile("perso/vie_pleine.png");
+    fpv_mob.loadFromFile("perso/vie_vide.png");
 
     vie_tour_vert.loadFromFile("vie_tour/vert.png", sf::IntRect(0,0,215,39));
     vie_tour_jaune.loadFromFile("vie_tour/jaune.png", sf::IntRect(0,0,215,39));
@@ -124,6 +128,16 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
     sf::Sprite svt2; //vie tour 2
     svt2.setTexture(vie_tour_vert);
     svt2.setPosition(sf::Vector2f(1700,604));
+    // vie des mobs
+    sf::Sprite spv_mob;
+    spv_mob.setTexture(pv_mob);
+    spv_mob.setScale(sf::Vector2f(0.3f, 0.3f));
+
+
+    sf::Sprite sfpv_mob;
+    sfpv_mob.setTexture(fpv_mob);
+    sfpv_mob.setScale(sf::Vector2f(0.3f, 0.3f));
+    
     // elexir
     sf::Sprite sel1; //elexir1
     sel1.setTexture(telexir);
@@ -179,11 +193,11 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
 
 
     //a retirer plus tard une fois que je fais le lien avec alex
-    int HP_Max_Tour=100;
-    int pvJ1 = 100;
-    int lpvJ1 =100;
-    int pvJ2 = 100;
-    int lpvJ2 =100;
+    int HP_Max_Tour=terrain->get_pv_tour(0);
+    int pvJ1 =HP_Max_Tour;
+    int lpvJ1 = HP_Max_Tour;
+    int pvJ2 = HP_Max_Tour;
+    int lpvJ2 = HP_Max_Tour;
     int compteur=0;
     float elexir1=0;
     float elexir2=0;
@@ -332,7 +346,7 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::O)){
                     if(elexir2>4){
-                        if (position_J2<=(2*Nombre_de_case)/3){
+                        if (position_J2>=(2*Nombre_de_case)/3){
                             elexir2-=4;
                             ajout_troupe_sort g;
                             g.nom = 'G';
@@ -402,7 +416,8 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                 //sort de poison
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
                     if(elexir1>3){
-                    elexir1-=3;                    
+                    elexir1-=3;
+
                     if(poison[0][1]!=6*120){
                         poison[1][0]=position_J1;
                         poison[1][1]=0;}
@@ -425,31 +440,31 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
             }
         // Si la vie du J1 est differente d'avant, on change l'affichage de sa vie     
         }
-        if (pvJ1!=lpvJ1){
-            lpvJ1 = pvJ1;
-            svt1.setTextureRect(sf::IntRect(0, 0, pvJ1*(215/HP_Max_Tour), 35));
-            if (100*pvJ1/HP_Max_Tour==70){
+        if (terrain->get_pv_tour(0)!=lpvJ1){
+            lpvJ1 = terrain->get_pv_tour(0);
+            svt1.setTextureRect(sf::IntRect(0, 0, lpvJ1*(215/HP_Max_Tour), 35));
+            if (100*lpvJ1/HP_Max_Tour<=70){
                 svt1.setTexture(vie_tour_jaune);
             }
-            if (100*pvJ1/HP_Max_Tour==40){
+            if (100*lpvJ1/HP_Max_Tour<=40){
                 svt1.setTexture(vie_tour_orange);
                 svt1.setPosition(sf::Vector2f(10,602));
             }
-            if (100*pvJ1/HP_Max_Tour==20){
+            if (100*lpvJ1/HP_Max_Tour<=20){
                 svt1.setTexture(vie_tour_rouge);
                 svt1.setPosition(sf::Vector2f(10,600));
             }}
-        if (pvJ2!=lpvJ2){
-            lpvJ2 = pvJ2;
-            svt2.setTextureRect(sf::IntRect(0, 0, pvJ2*(215/HP_Max_Tour), 35));
-            if (100*pvJ2/HP_Max_Tour==70){
+        if (terrain->get_pv_tour(1)!=lpvJ2){
+            lpvJ2 = terrain->get_pv_tour(1);
+            svt2.setTextureRect(sf::IntRect(0, 0, (lpvJ2*213)/HP_Max_Tour, 35));
+            if (100*lpvJ2/HP_Max_Tour<=70){
                 svt2.setTexture(vie_tour_jaune);
             }
-            if (100*pvJ2/HP_Max_Tour==40){
+            if (100*lpvJ2/HP_Max_Tour<=40){
                 svt2.setTexture(vie_tour_orange);
                 svt2.setPosition(sf::Vector2f(1700,602));
             }
-            if (100*pvJ1/HP_Max_Tour==20){
+            if (100*lpvJ1/HP_Max_Tour<=20){
                 svt2.setTexture(vie_tour_rouge);
                 svt2.setPosition(sf::Vector2f(1700,600));
             }}
@@ -475,9 +490,9 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
 
         ////////////////les objets qui bougent
         //les fleches 
-        sfleche1.setPosition(sf::Vector2f(160 + position_J1*(1500/Nombre_de_case),920));
+        sfleche1.setPosition(sf::Vector2f(160 + (position_J1*1500)/Nombre_de_case,920));
         window.draw(sfleche1);
-        sfleche2.setPosition(sf::Vector2f(160 + position_J2*(1500/Nombre_de_case),920));
+        sfleche2.setPosition(sf::Vector2f(160 + (position_J2*1500)/Nombre_de_case,920));
         window.draw(sfleche2);
     std::vector<ajout_troupe_sort> tableau_ajout;
         //les sorts
@@ -490,8 +505,14 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                 window.draw(sbdf);
                 BDF[k][1]--;
                 if (BDF[k][1]==1){
-                    
-                }
+                    ajout_troupe_sort b;
+                    b.nom = 'G';
+                    b.joueur = k/2;
+                    b.position = BDF[k][0];
+                    lock_unit->lock();
+                    tableau_ajout.push_back(b);
+                    lock_unit->unlock();
+        }
                 }
             }
         // affichage du sort de heal
@@ -553,6 +574,11 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
             }
             if (unit.get_nom() == 'p'){
             }
+            sfpv_mob.setPosition(sf::Vector2f(154 +unit.get_position()*(1500/Nombre_de_case),580));
+            window.draw(sfpv_mob);
+            spv_mob.setTextureRect(sf::IntRect(0,0,61+(400*unit.get_pv())/unit.get_pv_max(),112));
+            spv_mob.setPosition(sf::Vector2f(154 +unit.get_position()*(1500/Nombre_de_case),580));
+            window.draw(spv_mob);
         
         }
         

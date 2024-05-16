@@ -184,6 +184,15 @@ void Terrain::boucle_action(int n, mutex * lock_unit, mutex * lock_perso){
     }
 }
 
+int Terrain::get_pv_tour(int joueur){
+    if (joueur == 0){
+        return _joueurG->_tour->get_pv();
+    }
+    else{
+        return _joueurD->_tour->get_pv();
+    }
+}
+
 void Terrain::ajout_units(){
     cout<<tableau_ajout.size()<<endl;
     for ( auto it = begin (tableau_ajout); it != end (tableau_ajout); ) {
