@@ -99,11 +99,28 @@ void Terrain::deplacement() {
 
 
 void Terrain::attaque() {
+    int range_tour=_joueurD->_tour->_range;
+    int g=1, d=1;
     for (auto& unit : units) 
     {
         int joueur = unit.get_joueur();
         int range = unit.get_range();
         int pos = unit.get_position();
+        // attaque des tours sur les personnages
+        if ((pos <= range_tour) && unit.get_joueur() && g)
+        {
+            _joueurG->_tour->attaquer(unit);
+            g=0;
+        }
+        if (unit.get_joueur()==0 && (pos >= NB_CASE - range_tour - 1) && d) 
+        { 
+            _joueurD->_tour->attaquer(unit);
+            d=0;
+        }
+
+
+
+        //attaque des personnages
         if ((pos <= range) && unit.get_joueur())
         {
             unit.attaquer(*(_joueurG->_tour));
