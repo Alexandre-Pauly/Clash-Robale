@@ -185,31 +185,34 @@ void Terrain::boucle_action(int n, mutex * lock_unit, mutex * lock_perso){
 }
 
 void Terrain::ajout_units(){
+    cout<<tableau_ajout.size()<<endl;
     for ( auto it = begin (tableau_ajout); it != end (tableau_ajout); ) {
+        cout<<it->nom<<endl;
         switch (it->nom)
         {
         case 'P':
             spawn_perso(new Pekka(it->joueur),it->position);
+            it=tableau_ajout.erase(it);
             break;
         case 'G':
             spawn_perso(new Geant(it->joueur),it->position);
-            
+            it=tableau_ajout.erase(it);
             break;
         case 'I':
             spawn_perso(new Infentrie(it->joueur),it->position);
-            
+            it=tableau_ajout.erase(it);
             break;
         case 'S':
             utilisation_sort(new Soin(it->joueur,it->position));
-            
+            it=tableau_ajout.erase(it);
             break;
         case 'T':
             utilisation_sort(new Poison(it->joueur,it->position));
-            
+            it=tableau_ajout.erase(it);
             break;
         case 'B':
             utilisation_sort(new Boule_de_feu(it->joueur,it->position));
-            
+            it=tableau_ajout.erase(it);
             break;
         
         

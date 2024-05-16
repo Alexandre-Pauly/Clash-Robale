@@ -224,18 +224,15 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
             if (event.type == sf::Event::Closed)
                 window.close();
             if (event.type == sf::Event::KeyPressed){
-                std::cout<< "hello"<<std::endl;
                 // LES LIGNES SI DESSOUS FONT BOUGER LES FLECHES
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)){
                     if (position_J1<(Nombre_de_case)){
                     position_J1+=Nombre_de_case/30;
-                    std::cout<< position_J1 <<std::endl;
                     }
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
                     if (position_J1>0){
                     position_J1-= Nombre_de_case/30;
-                    std::cout<< position_J1 <<std::endl;
                     }
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::SemiColon)){
@@ -271,7 +268,7 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                         if (position_J1<=Nombre_de_case/3){
                             elexir1-=3;
                             ajout_troupe_sort i;
-                            i.nom = 'i';
+                            i.nom = 'I';
                             i.joueur = 0;
                             i.position = position_J1;
                             tableau_ajout.push_back(i);
@@ -284,7 +281,7 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                         if (position_J1<=Nombre_de_case/3){
                             elexir1-=3;
                             ajout_troupe_sort p;
-                            p.nom = 'p';
+                            p.nom = 'P';
                             p.joueur = 0;
                             p.position = position_J1;
                             tableau_ajout.push_back(p);
@@ -298,10 +295,11 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                         if (position_J1<=Nombre_de_case/3){
                             elexir1-=4;
                             ajout_troupe_sort g;
-                            g.nom = 'g';
+                            g.nom = 'G';
                             g.joueur = 0;
                             g.position = position_J1;
                             tableau_ajout.push_back(g);
+                            std::cout << "test1"<< std::endl;
                             
                             }
                     }
@@ -312,7 +310,7 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                         if (position_J2>=(Nombre_de_case*2)/3){
                             elexir2-=3;
                             ajout_troupe_sort i;
-                            i.nom = 'i';
+                            i.nom = 'I';
                             i.joueur = 1;
                             i.position = position_J2;
                             tableau_ajout.push_back(i);
@@ -324,7 +322,7 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                         if (position_J2<=(2*Nombre_de_case)/3){
                             elexir2-=3;
                             ajout_troupe_sort p;
-                            p.nom = 'p';
+                            p.nom = 'P';
                             p.joueur = 1;
                             p.position = position_J2;
                             tableau_ajout.push_back(p);
@@ -337,7 +335,7 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                         if (position_J2<=(2*Nombre_de_case)/3){
                             elexir2-=4;
                             ajout_troupe_sort g;
-                            g.nom = 'g';
+                            g.nom = 'G';
                             g.joueur = 1;
                             g.position = position_J2;
                             tableau_ajout.push_back(g);
@@ -530,19 +528,19 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
         //////////////// affichage des personnages 
 
         int n = sizeof(terrain->units);
-        for (int k=0;k<n;k++){
+        for (auto& unit : terrain->units){
             //affichage des geants
-            if (terrain->units[k].get_nom() == 'G'){
-                if (terrain->units[k].get_joueur()==1){
+        
+            if (unit.get_nom() == 'G'){
+                if (unit.get_joueur()==0){
                 sgeant.setTextureRect(sf::IntRect(202*((compteur/10)%5),184*((compteur/50)%8),202,184));
-                sgeant.setPosition(sf::Vector2f(154 + terrain->units[k].get_position()*(1500/Nombre_de_case),650));
+                sgeant.setPosition(sf::Vector2f(154 + unit.get_position()*(1500/Nombre_de_case),650));
                 window.draw(sgeant);
                 }
                 else {
                     sgeant2.setTextureRect(sf::IntRect(808- 202*((compteur/10)%5),184*((compteur/50)%8),202,184));
-                    sgeant2.setPosition(sf::Vector2f(154 + terrain->units[k].get_position()*(1500/Nombre_de_case),650));
-                    std::cout<< terrain->units[k].get_position()<<std::endl;
-                    
+                    sgeant2.setPosition(sf::Vector2f(154 +unit.get_position()*(1500/Nombre_de_case),650));
+                    std::cout<< unit.get_position()<<std::endl;
                     window.draw(sgeant2);}
 
                 }
@@ -550,11 +548,12 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                 
             
             //affichage des infentries
-            if (terrain->units[k].get_nom() == 'i'){
+            if (unit.get_nom() == 'i'){
 
             }
-            if (terrain->units[k].get_nom() == 'p'){
+            if (unit.get_nom() == 'p'){
             }
+        
         }
         
         
@@ -563,6 +562,7 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
 
         // on code au dessus de ca
         window.display();
+        //std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
     }
 
@@ -585,7 +585,7 @@ int main(){
     mutex lock_unit, lock_perso;
 
     thread t1(affichage,&terrain,&lock_unit,&lock_perso);
-    terrain.boucle_action(10,&lock_unit,&lock_perso);
+    terrain.boucle_action(&lock_unit,&lock_perso);
     t1.join();
     
 
