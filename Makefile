@@ -1,4 +1,4 @@
-all: main 
+all: main affichage
 
 main: main.o perso.o terrain.o joueur.o sort.o tour.o
 	g++ -Wall -o main  main.o perso.o terrain.o joueur.o sort.o tour.o

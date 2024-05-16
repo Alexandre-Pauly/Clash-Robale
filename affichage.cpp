@@ -29,6 +29,7 @@ int affichage()
     sf::Texture toucheJ2;
     sf::Texture BDF1;
     sf::Texture Heal;
+    sf::Texture Poison;
     sf::Texture fond_elexir;
     sf::Texture telexir;
     sf::Texture geant;
@@ -44,6 +45,7 @@ int affichage()
     titre.loadFromFile("element_fixe/titre.png", sf::IntRect(0,0,814,360));
     BDF1.loadFromFile("sort/bdf.png");
     Heal.loadFromFile("sort/heal.png");
+    Poison.loadFromFile("sort/poison.png");
     // Chargement des barres de vie (differentes couleurs)
     fond_vie_tour.loadFromFile("vie_tour/fond.png", sf::IntRect(0,0,215,39));
     fond_elexir.loadFromFile("barre_elexir/elexir_empty.png");
@@ -138,6 +140,10 @@ int affichage()
     sf::Sprite sheal; //soin 
     sheal.setTexture(Heal);
 
+    sf::Sprite spoison; //soin 
+    spoison.setTexture(Poison);
+    spoison.setScale(sf::Vector2f(1.5f, 1.5f));
+
     // les persos, sont egalement affiné a la fin
     sf::Sprite sgeant;
     sgeant.setTexture(geant);
@@ -175,6 +181,12 @@ int affichage()
     for (int k=0;k<4;k++){
         for (int j=0;j<2;j++){
             heal[k][j]= 4*hz;
+        }
+    }
+    int poison [4][2];
+    for (int k=0;k<4;k++){
+        for (int j=0;j<2;j++){
+            poison[k][j]= 4*hz;
         }
     }
 
@@ -242,6 +254,17 @@ int affichage()
                         BDF[0][1]=100;}
                     }
                     }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)){
+                    if(elexir2>4){
+                    elexir2-=4;
+                    if(BDF[2][1]!=0){
+                        BDF[3][0]=position_J2;
+                        BDF[3][1]=100;}
+                    else{
+                        BDF[2][0]=position_J2;
+                        BDF[2][1]=100;}
+                    }
+                    }
                 // detection des sorts de heal
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
                     if(elexir1>3){
@@ -252,6 +275,40 @@ int affichage()
                     else{
                         heal[0][0]=position_J1;
                         heal[0][1]=0;}
+                    }
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)){
+                    if(elexir2>3){
+                    elexir2-=3;                    
+                    if(heal[2][1]!=4*hz){
+                        heal[3][0]=position_J2;
+                        heal[3][1]=0;}
+                    else{
+                        heal[2][0]=position_J2;
+                        heal[2][1]=0;}
+                    }
+                }
+                //sort de poison
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
+                    if(elexir1>3){
+                    elexir1-=3;                    
+                    if(poison[0][1]!=6*120){
+                        poison[1][0]=position_J1;
+                        poison[1][1]=0;}
+                    else{
+                        poison[0][0]=position_J1;
+                        poison[0][1]=0;}
+                    }
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)){
+                    if(elexir2>3){
+                    elexir2-=3;                    
+                    if(poison[2][1]!=6*120){
+                        poison[3][0]=position_J2;
+                        poison[3][1]=0;}
+                    else{
+                        poison[2][0]=position_J2;
+                        poison[2][1]=0;}
                     }
                 }
             }
@@ -340,6 +397,19 @@ int affichage()
                 window.draw(sheal);
                 heal[k][1]++;
                 if (heal[k][1]==1){
+                    //envoyer info au jeu
+                }
+                }
+            }
+        for (int k=0;k<4;k++){
+            if (poison[k][1]<6*120){
+                std::cout<< "temps de poison=" << float(poison[k][1])/float(hz) <<std::endl;
+                
+                spoison.setTextureRect(sf::IntRect(110*(int(poison[k][1]/20)%6),150*(int(poison[k][1]/120)%2),110,122));
+                spoison.setPosition(sf::Vector2f(160 + poison[k][0]*(1500/Nombre_de_case),700));
+                window.draw(spoison);
+                poison[k][1]++;
+                if (poison[k][1]==1){
                     //envoyer info au jeu
                 }
                 }
