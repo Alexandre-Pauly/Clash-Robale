@@ -1,6 +1,14 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "sort.hpp" 
+#include "tour.hpp"
+#include "joueur.hpp"
+#include "perso.hpp"
+#include "terrain.hpp"
+#include <chrono>
+using namespace std;
+
 // truc a faire, pour faire un projet plus propre
 //tout mettre  dans une class affichage, comme ca on peut faire communiquerla classe terrain avec la class affichage. 
 // mettre toute les images dans les dossiers bien rangé sinon c'est illisible et le truc est impossible a rendre.
@@ -9,7 +17,7 @@
 //azzi c'est long eft j'ai plein de taf.
 // fonction manque d'elexir
 
-int affichage()
+int affichage(Terrain* terrain)
 {
     sf::RenderWindow window(sf::VideoMode(1920,1080), "Clash Robal !");
     int hz = 144;
@@ -380,7 +388,7 @@ int affichage()
                 window.draw(sbdf);
                 BDF[k][1]--;
                 if (BDF[k][1]==1){
-                    //envoyer info au jeu
+                    
                 }
                 }
             }
@@ -397,7 +405,11 @@ int affichage()
                 window.draw(sheal);
                 heal[k][1]++;
                 if (heal[k][1]==1){
-                    //envoyer info au jeu
+                    ajout_troupe_sort h;
+                    h.nom = 's';
+                    h.joueur = k/2;
+                    h.position = heal[k][0];
+                    tableau_ajout.push_back(h);
                 }
                 }
             }
@@ -443,6 +455,19 @@ int affichage()
 }
 
 int main(){
-    affichage();
+        // Début du chrono
+    auto start = std::chrono::high_resolution_clock::now();
+
+    // Votre code ici
+    
+    char str[50]="gauche";
+    Tour *T1=new Tour;
+    Tour *T2=new Tour;
+    Joueur joueurG(str,*T1);
+    char str2[50]="droite";
+    Joueur joueurD(str2,*T2);
+    Terrain terrain(joueurG,joueurD);
+
+    affichage(&terrain);
     return 0;
 }

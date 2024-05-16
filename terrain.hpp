@@ -12,6 +12,7 @@ typedef struct{
     int joueur;
     int position;
 }ajout_troupe_sort;
+extern std::vector<ajout_troupe_sort> tableau_ajout;
 
 
 

@@ -22,8 +22,8 @@ joueur.o: joueur.cpp joueur.hpp
 main.o: main.cpp perso.hpp terrain.hpp joueur.hpp sort.hpp tour.hpp
 	g++ -Wall -c main.cpp
 
-affichage: affichage.cpp
-	g++ affichage.cpp -o affichage -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+affichage: affichage.cpp perso.o terrain.o joueur.o sort.o tour.o
+	g++ affichage.cpp -o affichage -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio perso.o terrain.o joueur.o sort.o tour.o
 
 
 clean:
