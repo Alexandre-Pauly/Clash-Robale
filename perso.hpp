@@ -7,6 +7,7 @@ class Tour;
 class Joueur;
 
 
+
 class Perso{
     public :
     void attaquer(Perso& perso);
