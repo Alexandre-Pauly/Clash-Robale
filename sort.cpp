@@ -6,8 +6,8 @@
 
 
 Soin::Soin(int joueur ,int position){
-    _temps_effet=20;
-    _effet_vie=5;
+    _temps_effet=100;
+    _effet_vie=1;
     _cout=3;
     _effet_sur_joueur=joueur;
     _slowdown=0;
@@ -15,8 +15,8 @@ Soin::Soin(int joueur ,int position){
     _position=position;
 }
 Soin::Soin(const Joueur joueur ,int position){
-    _temps_effet=20;
-    _effet_vie=5;
+    _temps_effet=100;
+    _effet_vie=1;
     _cout=3;
     _effet_sur_joueur=joueur.get_nb_joueur();
     _slowdown=0;
@@ -26,8 +26,8 @@ Soin::Soin(const Joueur joueur ,int position){
 
 
 Poison::Poison(int joueur ,int position){
-    _temps_effet=20;
-    _effet_vie=-3;
+    _temps_effet=50;
+    _effet_vie=-1;
     _cout=3;
     _effet_sur_joueur=(joueur+1)%2;
     _slowdown=2;
@@ -36,8 +36,8 @@ Poison::Poison(int joueur ,int position){
 }
 
 Poison::Poison(const Joueur joueur ,int position){
-    _temps_effet=20;
-    _effet_vie=-3;
+    _temps_effet=50;
+    _effet_vie=-1;
     _cout=3;
     _effet_sur_joueur=(joueur.get_nb_joueur()+1)%2;
     _slowdown=2;

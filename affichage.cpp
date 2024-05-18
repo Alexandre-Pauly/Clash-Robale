@@ -49,6 +49,10 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
     sf::Texture pekka2;
     sf::Texture apekka;
     sf::Texture apekka2;
+    sf::Texture shooter;
+    sf::Texture shooter2;
+    sf::Texture ashooter;
+    sf::Texture ashooter2;
 
 
     sf::Texture pv_mob;
@@ -81,10 +85,16 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
 
     geant.loadFromFile("perso/geant/walking.png");
     geant2.loadFromFile("perso/geant/walking2.png");
+
     pekka.loadFromFile("perso/pekka/Walk1.png");
     pekka2.loadFromFile("perso/pekka/Walk2.png");
     apekka.loadFromFile("perso/pekka/Attack1.png");
     apekka2.loadFromFile("perso/pekka/Attack2.png");
+
+    shooter.loadFromFile("perso/shooter/Walk1.png");
+    shooter2.loadFromFile("perso/shooter/Walk2.png");
+    ashooter.loadFromFile("perso/shooter/Shot1.png");
+    ashooter2.loadFromFile("perso/shooter/Shot2.png");
 
 
     //Creation des sprites des elements graphiques
@@ -200,6 +210,15 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
     sapekka1.setTexture(apekka);
     sf::Sprite sapekka2;
     sapekka2.setTexture(apekka2);
+
+    sf::Sprite sshooter;
+    sshooter.setTexture(shooter);
+    sf::Sprite sshooter2;
+    sshooter2.setTexture(shooter2);
+    sf::Sprite sashooter;
+    sashooter.setTexture(ashooter);
+    sf::Sprite sashooter2;
+    sashooter2.setTexture(ashooter2);
 
 
 
@@ -404,7 +423,12 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                 // detection des sorts de heal
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
                     if(elexir1>3){
-                    elexir1-=3;                    
+                    elexir1-=3;
+                    ajout_troupe_sort h;
+                    h.nom = 'S';
+                    h.joueur = 0;
+                    h.position = position_J1;
+                    tableau_ajout.push_back(h);             
                     if(heal[0][1]!=4*hz){
                         heal[1][0]=position_J1;
                         heal[1][1]=0;}
@@ -415,7 +439,12 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)){
                     if(elexir2>3){
-                    elexir2-=3;                    
+                    elexir2-=3;
+                    ajout_troupe_sort h;
+                    h.nom = 'S';
+                    h.joueur = 1;
+                    h.position = position_J1;
+                    tableau_ajout.push_back(h);                       
                     if(heal[2][1]!=4*hz){
                         heal[3][0]=position_J2;
                         heal[3][1]=0;}
@@ -428,6 +457,11 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
                     if(elexir1>3){
                     elexir1-=3;
+                    ajout_troupe_sort p;
+                    p.nom = 'T';
+                    p.joueur = 0;
+                    p.position = position_J1;
+                    tableau_ajout.push_back(p);   
 
                     if(poison[0][1]!=6*120){
                         poison[1][0]=position_J1;
@@ -439,7 +473,12 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)){
                     if(elexir2>3){
-                    elexir2-=3;                    
+                    elexir2-=3;    
+                    ajout_troupe_sort t;
+                    t.nom = 'T';
+                    t.joueur = 1;
+                    t.position = position_J1;
+                    tableau_ajout.push_back(t);                   
                     if(poison[2][1]!=6*120){
                         poison[3][0]=position_J2;
                         poison[3][1]=0;}
@@ -510,20 +549,19 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
         //boule de feu
         //affichage des Boules de feu
         for (int k=0;k<4;k++){
+            if (BDF[k][1]==1){
+                ajout_troupe_sort t;
+                    t.nom = 'B';
+                    t.joueur = k/2;
+                    t.position = BDF[k][0];
+                    tableau_ajout.push_back(t);
+            }
             if (BDF[k][1]>0){
                 sbdf.setTextureRect(sf::IntRect(153*(BDF[k][1]%6),0,153,154));
                 sbdf.setPosition(sf::Vector2f(313 + (BDF[k][0]*1500)/Nombre_de_case,774-BDF[k][1]*8));
                 window.draw(sbdf);
                 BDF[k][1]--;
-                if (BDF[k][1]==1){
-                    ajout_troupe_sort b;
-                    b.nom = 'B';
-                    b.joueur = k/2;
-                    b.position = BDF[k][0];
-                    lock_unit->lock();
-                    tableau_ajout.push_back(b);
-                    lock_unit->unlock();
-        }
+
                 }
             }
         // affichage du sort de heal
@@ -537,13 +575,7 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                     sheal.setPosition(sf::Vector2f(154 + (heal[k][0]*1500)/Nombre_de_case,710));}
                 window.draw(sheal);
                 heal[k][1]++;
-                if (heal[k][1]==1){
-                    ajout_troupe_sort h;
-                    h.nom = 'S';
-                    h.joueur = k/2;
-                    h.position = heal[k][0];
-                    tableau_ajout.push_back(h);
-                }
+                
                 }
             }
         for (int k=0;k<4;k++){
@@ -552,14 +584,6 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                 spoison.setPosition(sf::Vector2f(160 + (poison[k][0]*1500)/Nombre_de_case,700));
                 window.draw(spoison);
                 poison[k][1]++;
-                if (poison[k][1]==1){
-                    //envoyer info au jeu
-                    ajout_troupe_sort p;
-                    p.nom = 'P';
-                    p.joueur = k/2;
-                    p.position = heal[k][0];
-                    tableau_ajout.push_back(p);
-                }
                 }
             }
         //////////////// affichage des personnages 
@@ -577,7 +601,6 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                 else {
                     sgeant2.setTextureRect(sf::IntRect(808- 202*((compteur/10)%5),184*((compteur/50)%8),202,184));
                     sgeant2.setPosition(sf::Vector2f(154 +(unit.get_position()*1500)/Nombre_de_case,650));
-                    std::cout<< unit.get_position()<<std::endl;
                     window.draw(sgeant2);}
 
                 }
@@ -586,6 +609,26 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
             
             //affichage des infentries
             if (unit.get_nom() == 'I'){
+                if (unit.get_joueur()==0){
+                    if (unit.get_attaque()==0){
+                        sshooter.setTextureRect(sf::IntRect(128*((compteur/10)%6),0,128,128));
+                        sshooter.setPosition(sf::Vector2f(154 + (unit.get_position()*1500)/Nombre_de_case,706));
+                        window.draw(sshooter);}
+                    else{
+                        sashooter.setTextureRect(sf::IntRect(128*((compteur/10)%11),0,128,128));
+                        sashooter.setPosition(sf::Vector2f(154 + (unit.get_position()*1500)/Nombre_de_case,706));
+                        window.draw(sashooter);}
+                    }
+                else {
+                    if (unit.get_attaque()==0){
+                        sshooter2.setTextureRect(sf::IntRect(640- 128*((compteur/10)%6),0,128,128));
+                        sshooter2.setPosition(sf::Vector2f(154 +(unit.get_position()*1500)/Nombre_de_case,706));
+                        window.draw(sshooter2);}
+                    else{
+                        sashooter2.setTextureRect(sf::IntRect(1280- 128*((compteur/10)%11),0,128,128));
+                        sashooter2.setPosition(sf::Vector2f(154 + (unit.get_position()*1500)/Nombre_de_case,706));
+                        window.draw(sashooter2);}
+                    }
                 
 
                 
@@ -605,7 +648,6 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                     if (unit.get_attaque()==0){
                         spekka2.setTextureRect(sf::IntRect(896- 128*((compteur/10)%8),0,128,128));
                         spekka2.setPosition(sf::Vector2f(154 +(unit.get_position()*1500)/Nombre_de_case,706));
-                        std::cout<< unit.get_position()<<std::endl;
                         window.draw(spekka2);}
                     else{
                         sapekka2.setTextureRect(sf::IntRect(384- 128*((compteur/10)%4),0,128,128));

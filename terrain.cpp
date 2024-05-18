@@ -204,7 +204,6 @@ int Terrain::get_pv_tour(int joueur){
 }
 
 void Terrain::ajout_units(){
-    cout<<tableau_ajout.size()<<endl;
     for ( auto it = begin (tableau_ajout); it != end (tableau_ajout); ) {
         cout<<it->nom<<endl;
         switch (it->nom)
@@ -231,6 +230,7 @@ void Terrain::ajout_units(){
             break;
         case 'B':
             utilisation_sort(new Boule_de_feu(it->joueur,it->position));
+            cout<<"couille"<<endl;
             it=tableau_ajout.erase(it);
             break;
         
