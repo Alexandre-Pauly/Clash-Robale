@@ -3,7 +3,7 @@
 #include "joueur.hpp"
 
 Tour::Tour(){
-    _range = 6;
+    _range = NB_CASE/15;
     _pv = 600;
     _degat = -4;
 }

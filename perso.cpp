@@ -10,7 +10,7 @@ Geant::Geant(int joueur){
     _vitesse = 2;
     _joueur = joueur;
     _cout =5;
-    _range = 1;
+    _range = NB_CASE/30;
     _nom='G';
 }
 
@@ -21,7 +21,7 @@ Geant::Geant(const Joueur &joueur){
     _vitesse = 2;
     _joueur = joueur.get_nb_joueur();
     _cout =5;
-    _range = 1;
+    _range = NB_CASE/30;
     _nom='G';
 
 }
@@ -34,7 +34,7 @@ Pekka::Pekka(int joueur){
     _vitesse = 4;
     _joueur = joueur;
     _cout = 4;
-    _range = 1;
+    _range = NB_CASE/30;
     _nom='P';
 }
 Pekka::Pekka(const Joueur &joueur){
@@ -44,7 +44,7 @@ Pekka::Pekka(const Joueur &joueur){
     _vitesse = 4;
     _joueur = joueur.get_nb_joueur();
     _cout = 4;
-    _range = 1;
+    _range = NB_CASE/30;
     _nom='P';
 }
 
@@ -57,7 +57,7 @@ Infentrie::Infentrie(int joueur){
     _vitesse = 3;
     _joueur = joueur;
     _cout = 4;
-    _range = 4;
+    _range = NB_CASE/15;
     _nom='I';
 }
 
@@ -68,7 +68,7 @@ Infentrie::Infentrie(const Joueur &joueur){
     _vitesse = 3;
     _joueur = joueur.get_nb_joueur();
     _cout = 4;
-    _range = 4;
+    _range = NB_CASE/15;
     _nom='I';
 }
 
