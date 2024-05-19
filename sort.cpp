@@ -30,7 +30,7 @@ Poison::Poison(int joueur ,int position){
     _effet_vie=-1;
     _cout=3;
     _effet_sur_joueur=(joueur+1)%2;
-    _slowdown=2;
+    _slowdown=1;
     _zone=NB_CASE/15;
     _position=position;
 }
@@ -40,7 +40,7 @@ Poison::Poison(const Joueur joueur ,int position){
     _effet_vie=-1;
     _cout=3;
     _effet_sur_joueur=(joueur.get_nb_joueur()+1)%2;
-    _slowdown=2;
+    _slowdown=1;
     _zone=NB_CASE/30;
     _position=position;
 }
