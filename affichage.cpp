@@ -131,7 +131,7 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
 
     sf::Sprite stf2;
     stf2.setTexture(tf2);
-    stf2.setPosition(sf::Vector2f(1615, 890));
+    stf2.setPosition(sf::Vector2f(1650, 890));
     stf2.setScale(sf::Vector2f(0.6f, 0.6f));
 
     sf::Sprite stour1;
