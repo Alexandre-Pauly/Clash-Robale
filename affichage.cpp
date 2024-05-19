@@ -60,6 +60,8 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
     sf::Texture WinJ2;
     sf::Texture Def1;
     sf::Texture Def2;
+    sf::Texture tf1;
+    sf::Texture tf2;
 
 
     
@@ -71,6 +73,8 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
     tour2.loadFromFile("element_fixe/tour2.png", sf::IntRect(0, 0, 500, 500));
     fleche1.loadFromFile("fleche_arg.png", sf::IntRect(0, 0, 100, 120));
     fleche2.loadFromFile("fleche.png", sf::IntRect(0, 0, 100, 120));
+    tf1.loadFromFile("element_fixe/touche_fleche1.png");
+    tf2.loadFromFile("element_fixe/touche_fleche2.png");
     titre.loadFromFile("element_fixe/titre.png", sf::IntRect(0,0,814,360));
     BDF1.loadFromFile("sort/bdf.png");
     Heal.loadFromFile("sort/heal.png");
@@ -119,6 +123,16 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
     stoucheJ2.setTexture(toucheJ2);
     stoucheJ2.setPosition(sf::Vector2f(1300, 10));
     stoucheJ2.setScale(sf::Vector2f(0.8f, 0.8f));
+
+    sf::Sprite stf1;
+    stf1.setTexture(tf1);
+    stf1.setPosition(sf::Vector2f(130, 890));
+    stf1.setScale(sf::Vector2f(0.6f, 0.6f));
+
+    sf::Sprite stf2;
+    stf2.setTexture(tf2);
+    stf2.setPosition(sf::Vector2f(1615, 890));
+    stf2.setScale(sf::Vector2f(0.6f, 0.6f));
 
     sf::Sprite stour1;
     stour1.setTexture(tour1);
@@ -562,12 +576,14 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
         window.draw(sfvt2);
         window.draw(svt1);
         window.draw(svt2);
+        window.draw(stf1);
+        window.draw(stf2);
 
         ////////////////les objets qui bougent
         //les fleches 
-        sfleche1.setPosition(sf::Vector2f(160 + (position_J1*1500)/Nombre_de_case,920));
+        sfleche1.setPosition(sf::Vector2f(140 + (position_J1*1520)/Nombre_de_case,920));
         window.draw(sfleche1);
-        sfleche2.setPosition(sf::Vector2f(160 + (position_J2*1500)/Nombre_de_case,920));
+        sfleche2.setPosition(sf::Vector2f(140 + (position_J2*1520)/Nombre_de_case,920));
         window.draw(sfleche2);
 
         /// affichages des ptit bout de choux qui tire la c'est trop mignon
@@ -591,7 +607,7 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
         for (int k=0;k<4;k++){
             if (BDF[k][1]>0){
                 sbdf.setTextureRect(sf::IntRect(153*(BDF[k][1]%6),0,153,154));
-                sbdf.setPosition(sf::Vector2f(313 + (BDF[k][0]*1500)/Nombre_de_case,774-BDF[k][1]*8));
+                sbdf.setPosition(sf::Vector2f(293 + (BDF[k][0]*1520)/Nombre_de_case,774-BDF[k][1]*8));
                 window.draw(sbdf);
                 BDF[k][1]--;
                 if (BDF[k][1]==1){
@@ -608,10 +624,10 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
             if (heal[k][1]<4*hz){
                 if (heal[k][1]<100){
                     sheal.setTextureRect(sf::IntRect(192*(int(heal[k][1]/10)%5),130*(int(heal[k][1]/50)%2),183,167));
-                    sheal.setPosition(sf::Vector2f(154 + (heal[k][0]*1500)/Nombre_de_case,760-(int(heal[k][1]/50)%2)*60));}
+                    sheal.setPosition(sf::Vector2f(134 + (heal[k][0]*1520)/Nombre_de_case,760-(int(heal[k][1]/50)%2)*60));}
                 else{
                     sheal.setTextureRect(sf::IntRect(192*(int(heal[k][1]/10)%5),167*2,153,154));
-                    sheal.setPosition(sf::Vector2f(154 + (heal[k][0]*1500)/Nombre_de_case,710));}
+                    sheal.setPosition(sf::Vector2f(134 + (heal[k][0]*1520)/Nombre_de_case,710));}
                 window.draw(sheal);
                 heal[k][1]++;
                 
@@ -620,7 +636,7 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
         for (int k=0;k<4;k++){
             if (poison[k][1]<6*120){              
                 spoison.setTextureRect(sf::IntRect(110*(int(poison[k][1]/20)%6),150*(int(poison[k][1]/120)%2),110,122));
-                spoison.setPosition(sf::Vector2f(160 + (poison[k][0]*1500)/Nombre_de_case,700));
+                spoison.setPosition(sf::Vector2f(140 + (poison[k][0]*1520)/Nombre_de_case,700));
                 window.draw(spoison);
                 poison[k][1]++;
                 }
@@ -634,12 +650,12 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
             if (unit.get_nom() == 'G'){
                 if (unit.get_joueur()==0){
                 sgeant.setTextureRect(sf::IntRect(202*((compteur/10)%5),184*((compteur/50)%8),202,184));
-                sgeant.setPosition(sf::Vector2f(120 + (unit.get_position()*1500)/Nombre_de_case,650));
+                sgeant.setPosition(sf::Vector2f(100 + (unit.get_position()*1520)/Nombre_de_case,650));
                 window.draw(sgeant);
                 }
                 else {
                     sgeant2.setTextureRect(sf::IntRect(808- 202*((compteur/10)%5),184*((compteur/50)%8),202,184));
-                    sgeant2.setPosition(sf::Vector2f(120+(unit.get_position()*1500)/Nombre_de_case,650));
+                    sgeant2.setPosition(sf::Vector2f(100+(unit.get_position()*1520)/Nombre_de_case,650));
                     window.draw(sgeant2);}
 
                 }
@@ -651,21 +667,21 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                 if (unit.get_joueur()==0){
                     if (unit.get_attaque()==0){
                         sshooter.setTextureRect(sf::IntRect(128*((compteur/10)%6),0,128,128));
-                        sshooter.setPosition(sf::Vector2f(154 + (unit.get_position()*1500)/Nombre_de_case,706));
+                        sshooter.setPosition(sf::Vector2f(134 + (unit.get_position()*1520)/Nombre_de_case,706));
                         window.draw(sshooter);}
                     else{
                         sashooter.setTextureRect(sf::IntRect(128*((compteur/10)%11),0,128,128));
-                        sashooter.setPosition(sf::Vector2f(154 + (unit.get_position()*1500)/Nombre_de_case,706));
+                        sashooter.setPosition(sf::Vector2f(134 + (unit.get_position()*1520)/Nombre_de_case,706));
                         window.draw(sashooter);}
                     }
                 else {
                     if (unit.get_attaque()==0){
                         sshooter2.setTextureRect(sf::IntRect(640- 128*((compteur/10)%6),0,128,128));
-                        sshooter2.setPosition(sf::Vector2f(154 +(unit.get_position()*1500)/Nombre_de_case,706));
+                        sshooter2.setPosition(sf::Vector2f(134 +(unit.get_position()*1520)/Nombre_de_case,706));
                         window.draw(sshooter2);}
                     else{
                         sashooter2.setTextureRect(sf::IntRect(1280- 128*((compteur/10)%11),0,128,128));
-                        sashooter2.setPosition(sf::Vector2f(154 + (unit.get_position()*1500)/Nombre_de_case,706));
+                        sashooter2.setPosition(sf::Vector2f(134 + (unit.get_position()*1520)/Nombre_de_case,706));
                         window.draw(sashooter2);}
                     }
                 
@@ -677,31 +693,31 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                 if (unit.get_joueur()==0){
                     if (unit.get_attaque()==0){
                         spekka1.setTextureRect(sf::IntRect(128*((compteur/10)%8),0,128,128));
-                        spekka1.setPosition(sf::Vector2f(154 + (unit.get_position()*1500)/Nombre_de_case,706));
+                        spekka1.setPosition(sf::Vector2f(134 + (unit.get_position()*1520)/Nombre_de_case,706));
                         window.draw(spekka1);}
                     else{
                         sapekka1.setTextureRect(sf::IntRect(128*((compteur/10)%4),0,128,128));
-                        sapekka1.setPosition(sf::Vector2f(154 + (unit.get_position()*1500)/Nombre_de_case,706));
+                        sapekka1.setPosition(sf::Vector2f(134 + (unit.get_position()*1520)/Nombre_de_case,706));
                         window.draw(sapekka1);}
                     }
                 else {
                     if (unit.get_attaque()==0){
                         spekka2.setTextureRect(sf::IntRect(896- 128*((compteur/10)%8),0,128,128));
-                        spekka2.setPosition(sf::Vector2f(154 +(unit.get_position()*1500)/Nombre_de_case,706));
+                        spekka2.setPosition(sf::Vector2f(134 +(unit.get_position()*1520)/Nombre_de_case,706));
                         window.draw(spekka2);}
                     else{
                         sapekka2.setTextureRect(sf::IntRect(384- 128*((compteur/10)%4),0,128,128));
-                        sapekka2.setPosition(sf::Vector2f(154 + (unit.get_position()*1500)/Nombre_de_case,706));
+                        sapekka2.setPosition(sf::Vector2f(134 + (unit.get_position()*1520)/Nombre_de_case,706));
                         window.draw(sapekka2);}
                     }
 
                 }
             
             //affichage des pv des mobs
-            sfpv_mob.setPosition(sf::Vector2f(154 +(unit.get_position()*1500)/Nombre_de_case,580));
+            sfpv_mob.setPosition(sf::Vector2f(134 +(unit.get_position()*1520)/Nombre_de_case,580));
             window.draw(sfpv_mob);
             spv_mob.setTextureRect(sf::IntRect(0,0,61+(400*unit.get_pv())/unit.get_pv_max(),112));
-            spv_mob.setPosition(sf::Vector2f(154 +(unit.get_position()*1500)/Nombre_de_case,580));
+            spv_mob.setPosition(sf::Vector2f(134 +(unit.get_position()*1520)/Nombre_de_case,580));
             window.draw(spv_mob);
         
         }
