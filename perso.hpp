@@ -34,6 +34,8 @@ class Perso{
 
     void set_vitesse(int vit){_vitesse = vit;}
 
+    int static const range_vision=NB_CASE/10;
+
     
     protected :
     char _nom;
@@ -46,6 +48,7 @@ class Perso{
     int _cout;
     int _range;
     int _position=0;
+    
 };
 
 

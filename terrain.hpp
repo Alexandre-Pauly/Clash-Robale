@@ -21,9 +21,11 @@ class Terrain{
     public:
         Terrain(Joueur & joueurG,Joueur & joueurD);
         ~Terrain(){}
+
         void verification_pv();
         void deplacement();
         bool test_proximite(std::vector<Perso>::iterator it);
+        bool poursuite(std::vector<Perso>::iterator it);
         void attaque();
         void afficher()const;
         void spawn_perso(Perso *p,int pos);

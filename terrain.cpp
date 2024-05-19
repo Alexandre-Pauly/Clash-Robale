@@ -71,21 +71,53 @@ bool Terrain::test_proximite(std::vector<Perso>::iterator it) {
     if (((pos <= range) && (joueur==1)) || ((pos >= NB_CASE - range - 1) && (joueur==0))) {
         return true;
     }
-    for (auto& unit : units) {
-        if (unit.get_position() >= std::max(0, pos - range) && unit.get_position() < std::min(NB_CASE, pos + range + 1)) {
-            if (unit.get_joueur()!= joueur) {
-                return true;
+    if (it->get_nom()!='G')
+    {
+        for (auto& unit : units) {
+            if ((unit.get_joueur()!= joueur) && (unit.get_position() >= std::max(0, pos - range)) && (unit.get_position() < std::min(NB_CASE, pos + range + 1))) {
+                    return true;
             }
         }
     }
     return false;
 }
 
+bool Terrain::poursuite(std::vector<Perso>::iterator it) {
+    if (it->get_nom()=='G') return false;
+    int joueur = it->get_joueur();
+    int range=Perso::range_vision;
+    int pos=it->get_position();
+
+    if (joueur==0)
+    {
+        for (auto& unit : units) {
+
+            if ((unit.get_joueur()!= joueur) && (unit.get_position() >= pos - range) && (unit.get_position() < pos)) {
+                it->add_position(-it->get_vitesse());
+                it->set_attaque(0);
+                return true;
+            }
+        }
+    }else
+    {
+        for (auto& unit : units) {
+            if ((unit.get_joueur()!= joueur) && (unit.get_position() > pos) && (unit.get_position() <= pos + range))
+            {
+                it->add_position(it->get_vitesse());
+                it->set_attaque(0);
+                return true;
+            }
+        }
+    }
+    return false;
+
+}
+
 
 void Terrain::deplacement() {
     for (auto it = begin(units); it!= end(units); it++) 
     {
-        if (!test_proximite(it))
+        if (!test_proximite(it) && !poursuite(it))
         {
             if (it->get_joueur() == 0) {
                 it->add_position(it->get_vitesse());
@@ -125,27 +157,27 @@ void Terrain::attaque() {
 
 
         //attaque des personnages
-        if ((pos <= range) && unit.get_joueur())
-        {
-            unit.attaquer(*(_joueurG->_tour));
-            unit.set_attaque(1);
-        }
-        else if (unit.get_joueur()==0 && (pos >= NB_CASE - range - 1)) 
-        { 
-            unit.attaquer(*(_joueurD->_tour));
-            unit.set_attaque(1);
-        }else{
+            if ((pos <= range) && unit.get_joueur())
+            {
+                unit.attaquer(*(_joueurG->_tour));
+                unit.set_attaque(1);
+            }
+            else if (unit.get_joueur()==0 && (pos >= NB_CASE - range - 1)) 
+            { 
+                unit.attaquer(*(_joueurD->_tour));
+                unit.set_attaque(1);
+            }else if (unit.get_nom()!='G'){
 
-            for (auto& other_unit : units) {
-                if (other_unit.get_joueur()!= joueur){
-                    if (other_unit.get_position() >= std::max(0, pos - range) && other_unit.get_position() < std::min(NB_CASE, pos + range + 1)) {
-                        unit.attaquer(other_unit);
-                        unit.set_attaque(1);
-                        break;
+                for (auto& other_unit : units) {
+                    if (other_unit.get_joueur()!= joueur){
+                        if (other_unit.get_position() >= std::max(0, pos - range) && other_unit.get_position() < std::min(NB_CASE, pos + range + 1)) {
+                            unit.attaquer(other_unit);
+                            unit.set_attaque(1);
+                            break;
+                        }
                     }
                 }
             }
-        }
     }
     if (g){
         _joueurG->_tour->set_attaque(0);}
