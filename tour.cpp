@@ -6,6 +6,7 @@ Tour::Tour(){
     _range = NB_CASE/15;
     _pv = 600;
     _degat = -4;
+    _attaque = 0;
 }
 
 

@@ -54,9 +54,14 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
     sf::Texture ashooter;
     sf::Texture ashooter2;
 
-
     sf::Texture pv_mob;
     sf::Texture fpv_mob;
+    sf::Texture WinJ1;
+    sf::Texture WinJ2;
+    sf::Texture Def1;
+    sf::Texture Def2;
+
+
     
     //Chargement des textures du jeu
     fond.loadFromFile("element_fixe/fond.jpg", sf::IntRect(0,0, 1920,1080));
@@ -76,6 +81,8 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
     telexir.loadFromFile("barre_elexir/elexir_full.png");
     pv_mob.loadFromFile("perso/vie_pleine.png");
     fpv_mob.loadFromFile("perso/vie_vide.png");
+    WinJ1.loadFromFile("element_fixe/J1win.png");
+    WinJ2.loadFromFile("element_fixe/J2win.png");
 
     vie_tour_vert.loadFromFile("vie_tour/vert.png", sf::IntRect(0,0,215,39));
     vie_tour_jaune.loadFromFile("vie_tour/jaune.png", sf::IntRect(0,0,215,39));
@@ -95,7 +102,8 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
     shooter2.loadFromFile("perso/shooter/Walk2.png");
     ashooter.loadFromFile("perso/shooter/Shot1.png");
     ashooter2.loadFromFile("perso/shooter/Shot2.png");
-
+    Def1.loadFromFile("perso/defence1.png");
+    Def2.loadFromFile("perso/defence2.png");
 
     //Creation des sprites des elements graphiques
     sf::Sprite sfond;
@@ -219,6 +227,23 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
     sashooter.setTexture(ashooter);
     sf::Sprite sashooter2;
     sashooter2.setTexture(ashooter2);
+
+    sf::Sprite sdef1;
+    sdef1.setTexture(Def1);
+    sdef1.setPosition(sf::Vector2f(10,735));
+
+    sf::Sprite sdef2;
+    sdef2.setTexture(Def2);
+    sdef2.setPosition(sf::Vector2f(1310,735));
+
+
+    sf::Sprite sWinJ1;
+    sWinJ1.setTexture(WinJ1);
+    sWinJ1.setPosition(sf::Vector2f(700,300));
+
+    sf::Sprite sWinJ2;
+    sWinJ2.setTexture(WinJ2);
+    sWinJ2.setPosition(sf::Vector2f(700,300));
 
 
 
@@ -544,24 +569,38 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
         window.draw(sfleche1);
         sfleche2.setPosition(sf::Vector2f(160 + (position_J2*1500)/Nombre_de_case,920));
         window.draw(sfleche2);
-    std::vector<ajout_troupe_sort> tableau_ajout;
+
+        /// affichages des ptit bout de choux qui tire la c'est trop mignon
+        if (terrain->get_tour_attaque(0)==0){
+            sdef1.setTextureRect(sf::IntRect(0,0,153,105));
+        }
+        else{
+            sdef1.setTextureRect(sf::IntRect(598*((compteur/10)%3),0,598,105));
+        }
+        window.draw(sdef1);
+        if (terrain->get_tour_attaque(1)==0){
+            sdef2.setTextureRect(sf::IntRect(1196,0,598,105));
+        }
+        else{
+            sdef2.setTextureRect(sf::IntRect(1196-598*((compteur/10)%3),0,598,105));
+        }
+        window.draw(sdef2);
         //les sorts
         //boule de feu
         //affichage des Boules de feu
         for (int k=0;k<4;k++){
-            if (BDF[k][1]==1){
-                ajout_troupe_sort t;
-                    t.nom = 'B';
-                    t.joueur = k/2;
-                    t.position = BDF[k][0];
-                    tableau_ajout.push_back(t);
-            }
             if (BDF[k][1]>0){
                 sbdf.setTextureRect(sf::IntRect(153*(BDF[k][1]%6),0,153,154));
                 sbdf.setPosition(sf::Vector2f(313 + (BDF[k][0]*1500)/Nombre_de_case,774-BDF[k][1]*8));
                 window.draw(sbdf);
                 BDF[k][1]--;
-
+                if (BDF[k][1]==1){
+                    ajout_troupe_sort b;
+                    b.nom = 'B';
+                    b.joueur = 1;
+                    b.position = position_J2;
+                    tableau_ajout.push_back(b);
+                }
                 }
             }
         // affichage du sort de heal
@@ -595,12 +634,12 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
             if (unit.get_nom() == 'G'){
                 if (unit.get_joueur()==0){
                 sgeant.setTextureRect(sf::IntRect(202*((compteur/10)%5),184*((compteur/50)%8),202,184));
-                sgeant.setPosition(sf::Vector2f(154 + (unit.get_position()*1500)/Nombre_de_case,650));
+                sgeant.setPosition(sf::Vector2f(120 + (unit.get_position()*1500)/Nombre_de_case,650));
                 window.draw(sgeant);
                 }
                 else {
                     sgeant2.setTextureRect(sf::IntRect(808- 202*((compteur/10)%5),184*((compteur/50)%8),202,184));
-                    sgeant2.setPosition(sf::Vector2f(154 +(unit.get_position()*1500)/Nombre_de_case,650));
+                    sgeant2.setPosition(sf::Vector2f(120+(unit.get_position()*1500)/Nombre_de_case,650));
                     window.draw(sgeant2);}
 
                 }
@@ -633,6 +672,7 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
 
                 
             }
+            //affichage du pekka
             if (unit.get_nom() == 'P'){
                 if (unit.get_joueur()==0){
                     if (unit.get_attaque()==0){
@@ -665,6 +705,14 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
             window.draw(spv_mob);
         
         }
+        // message de victoire
+        if (terrain->get_pv_tour(0)<=0){
+            window.draw(sWinJ2);
+        }
+        if (terrain->get_pv_tour(1)<=0){
+            window.draw(sWinJ1);
+        }
+
         
         
 

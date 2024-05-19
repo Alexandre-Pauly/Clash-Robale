@@ -45,6 +45,7 @@ void Terrain::verification_pv(){
     }
 }
 
+
 void Terrain::afficher()const{
     cout<<"Tour gauche  PV= "<<_joueurG->_tour->get_pv()<<"\n";
     for (int i=0; i<NB_CASE;i++){
@@ -101,7 +102,8 @@ void Terrain::deplacement() {
 void Terrain::attaque() {
     int range_tour=_joueurD->_tour->_range;
     int g=1, d=1;
-    for (auto& unit : units) 
+
+    for (auto& unit : units)
     {
         int joueur = unit.get_joueur();
         int range = unit.get_range();
@@ -110,11 +112,13 @@ void Terrain::attaque() {
         if ((pos <= range_tour) && unit.get_joueur() && g)
         {
             _joueurG->_tour->attaquer(unit);
+            _joueurG->_tour->set_attaque(1);
             g=0;
         }
         if (unit.get_joueur()==0 && (pos >= NB_CASE - range_tour - 1) && d) 
         { 
             _joueurD->_tour->attaquer(unit);
+            _joueurD->_tour->set_attaque(1);
             d=0;
         }
 
@@ -143,6 +147,11 @@ void Terrain::attaque() {
             }
         }
     }
+    if (g){
+        _joueurG->_tour->set_attaque(0);}
+    if (d){
+        _joueurD->_tour->set_attaque(0);}
+
 }
 
 
@@ -200,6 +209,14 @@ int Terrain::get_pv_tour(int joueur){
     }
     else{
         return _joueurD->_tour->get_pv();
+    }
+}
+int Terrain::get_tour_attaque(int joueur){
+    if (joueur == 0){
+        return _joueurG->_tour->get_attaque();
+    }
+    else{
+        return _joueurD->_tour->get_attaque();
     }
 }
 
