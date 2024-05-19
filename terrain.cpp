@@ -279,7 +279,6 @@ void Terrain::ajout_units(){
             break;
         case 'B':
             utilisation_sort(new Boule_de_feu(it->joueur,it->position));
-            cout<<"couille"<<endl;
             it=tableau_ajout.erase(it);
             break;
         
