@@ -39,6 +39,10 @@ class Perso{
     void rm_slowdown(){_slowdown=0;}
     int get_slowdown()const{return _slowdown;}
 
+    void add_poursuite(){_poursuite=1;}
+    void rm_poursuite(){_poursuite=0;}
+    int get_poursuite()const{return _poursuite;}
+
 
     
     protected :
@@ -53,6 +57,7 @@ class Perso{
     int _range;
     int _position=0;
     int _slowdown=0;
+    int _poursuite=0;
     
 };
 
