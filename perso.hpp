@@ -1,7 +1,7 @@
 #ifndef PERSO
 #define PERSO
 
-#define NB_CASE 600
+#define NB_CASE 6000
 
 class Tour;
 class Joueur;
@@ -35,6 +35,10 @@ class Perso{
     void set_vitesse(int vit){_vitesse = vit;}
 
     int static const range_vision=NB_CASE/10;
+    void add_slowdown(){_slowdown=-4;}
+    void rm_slowdown(){_slowdown=0;}
+    int get_slowdown()const{return _slowdown;}
+
 
     
     protected :
@@ -48,6 +52,7 @@ class Perso{
     int _cout;
     int _range;
     int _position=0;
+    int _slowdown=0;
     
 };
 

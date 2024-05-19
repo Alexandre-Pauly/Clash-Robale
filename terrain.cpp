@@ -86,25 +86,24 @@ bool Terrain::poursuite(std::vector<Perso>::iterator it) {
     if (it->get_nom()=='G') return false;
     int joueur = it->get_joueur();
     int range=Perso::range_vision;
+    int r=it->get_range()/3;
     int pos=it->get_position();
 
     if (joueur==0)
     {
         for (auto& unit : units) {
 
-            if ((unit.get_joueur()!= joueur) && (unit.get_position() >= pos - range) && (unit.get_position() < pos)) {
-                it->add_position(-it->get_vitesse());
-                it->set_attaque(0);
+            if ((unit.get_joueur()!= joueur) && (abs(pos-unit.get_position()) <= range) && (unit.get_position() < pos-r)) {
+                it->add_position(-(it->get_vitesse()+it->get_slowdown()));
                 return true;
             }
         }
     }else
     {
         for (auto& unit : units) {
-            if ((unit.get_joueur()!= joueur) && (unit.get_position() > pos) && (unit.get_position() <= pos + range))
+            if ((unit.get_joueur()!= joueur) && (abs(pos-unit.get_position()) <= range) && (unit.get_position() > pos+r))
             {
-                it->add_position(it->get_vitesse());
-                it->set_attaque(0);
+                it->add_position(it->get_vitesse()+it->get_slowdown());
                 return true;
             }
         }
@@ -117,13 +116,13 @@ bool Terrain::poursuite(std::vector<Perso>::iterator it) {
 void Terrain::deplacement() {
     for (auto it = begin(units); it!= end(units); it++) 
     {
-        if (!test_proximite(it) && !poursuite(it))
+        if (!poursuite(it) && !test_proximite(it) )
         {
             if (it->get_joueur() == 0) {
-                it->add_position(it->get_vitesse());
+                it->add_position(it->get_vitesse()+it->get_slowdown());
                 it->set_attaque(0);
             } else {
-                it->add_position(-it->get_vitesse());
+                it->add_position(-(it->get_vitesse()+it->get_slowdown()));
                 it->set_attaque(0);
             }
         }
@@ -188,6 +187,11 @@ void Terrain::attaque() {
 
 
 void Terrain::effet_sort(){
+    for (auto& unit : units) 
+    {
+        unit.rm_slowdown();
+    }
+
     for (auto s = sort.begin(); s!= sort.end();) {
         if(s->get_temps()==0){
             s=sort.erase(s);
@@ -195,10 +199,17 @@ void Terrain::effet_sort(){
             
             s->reduire_temps();
             int p=s->get_position(), z=s->get_zone();
-            for (auto& unit : units) {
-                if (unit.get_position() >= p - z && unit.get_position() <= p + z) {
-                    if (unit.get_joueur() == s->get_effet_sur_joueur()) {
+            for (auto& unit : units) 
+            {
+                if (unit.get_joueur() == s->get_effet_sur_joueur()) 
+                {
+                    if (unit.get_position() >= p - z && unit.get_position() <= p + z)
+                    {
                         unit.effet_pv(s->get_effet_vie());
+                        if (s->get_slowdown())
+                        {
+                            unit.add_slowdown();
+                        }
                     }
                 }
             }
