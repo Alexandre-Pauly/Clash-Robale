@@ -21,9 +21,11 @@ class Terrain{
     public:
         Terrain(Joueur & joueurG,Joueur & joueurD);
         ~Terrain(){}
+
         void verification_pv();
         void deplacement();
         bool test_proximite(std::vector<Perso>::iterator it);
+        bool poursuite(std::vector<Perso>::iterator it);
         void attaque();
         void afficher()const;
         void spawn_perso(Perso *p,int pos);
@@ -33,6 +35,7 @@ class Terrain{
         void ajout_units();
         void boucle_action(std::mutex * lock_unit, std::mutex * lock_perso);
         int get_pv_tour(int joueur);
+        
 
         
         std::vector<Perso> units;
