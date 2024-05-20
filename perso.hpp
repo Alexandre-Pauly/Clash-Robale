@@ -31,8 +31,9 @@ class Perso{
         if (_position<0)_position=0;
     }
     int get_position()const{return _position;}
-
     void set_vitesse(int vit){_vitesse = vit;}
+    int get_poursuite()const{return _poursuite;}
+    int set_poursuite(int poursuite){_poursuite = poursuite;}
 
     int static const range_vision=NB_CASE/10;
 
@@ -47,6 +48,7 @@ class Perso{
     int _joueur;
     int _cout;
     int _range;
+    int _poursuite;
     int _position=0;
     
 };

@@ -95,6 +95,7 @@ bool Terrain::poursuite(std::vector<Perso>::iterator it) {
             if ((unit.get_joueur()!= joueur) && (unit.get_position() >= pos - range) && (unit.get_position() < pos)) {
                 it->add_position(-it->get_vitesse());
                 it->set_attaque(0);
+                it->set_poursuite(0);
                 return true;
             }
         }
@@ -105,6 +106,7 @@ bool Terrain::poursuite(std::vector<Perso>::iterator it) {
             {
                 it->add_position(it->get_vitesse());
                 it->set_attaque(0);
+                it->set_poursuite(0);
                 return true;
             }
         }
