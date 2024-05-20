@@ -41,7 +41,7 @@ Poison::Poison(const Joueur joueur ,int position){
     _cout=3;
     _effet_sur_joueur=(joueur.get_nb_joueur()+1)%2;
     _slowdown=2;
-    _zone=NB_CASE/30;
+    _zone=NB_CASE/15;
     _position=position;
 }
 
@@ -65,6 +65,6 @@ Boule_de_feu::Boule_de_feu(const Joueur joueur ,int position){
     _cout=4;
     _effet_sur_joueur=(joueur.get_nb_joueur()+1)%2;
     _slowdown=0;
-    _zone=1;
+    _zone=NB_CASE/30;
     _position=position;
 }

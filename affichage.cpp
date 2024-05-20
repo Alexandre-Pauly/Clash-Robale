@@ -360,9 +360,9 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                 }
                 //pekka
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
-                    if(elexir1>3){
+                    if(elexir1>4){
                         if (position_J1<=Nombre_de_case/3){
-                            elexir1-=3;
+                            elexir1-=4;
                             ajout_troupe_sort p;
                             p.nom = 'P';
                             p.joueur = 0;
@@ -374,9 +374,9 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                 }
                 //geant
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
-                    if(elexir1>4){
+                    if(elexir1>5){
                         if (position_J1<=Nombre_de_case/3){
-                            elexir1-=4;
+                            elexir1-=5;
                             ajout_troupe_sort g;
                             g.nom = 'G';
                             g.joueur = 0;
@@ -401,9 +401,9 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                     }
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)){
-                    if(elexir2>3){
+                    if(elexir2>4){
                         if (position_J2>=(2*Nombre_de_case)/3){
-                            elexir2-=3;
+                            elexir2-=4;
                             ajout_troupe_sort p;
                             p.nom = 'P';
                             p.joueur = 1;
@@ -414,9 +414,9 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                     }
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::O)){
-                    if(elexir2>4){
+                    if(elexir2>5){
                         if (position_J2>=(2*Nombre_de_case)/3){
-                            elexir2-=4;
+                            elexir2-=5;
                             ajout_troupe_sort g;
                             g.nom = 'G';
                             g.joueur = 1;
@@ -613,8 +613,8 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                 if (BDF[k][1]==1){
                     ajout_troupe_sort b;
                     b.nom = 'B';
-                    b.joueur = 1;
-                    b.position = position_J2;
+                    b.joueur = k/2;
+                    b.position = BDF[k][0];
                     tableau_ajout.push_back(b);
                 }
                 }

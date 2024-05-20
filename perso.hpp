@@ -1,7 +1,7 @@
 #ifndef PERSO
 #define PERSO
 
-#define NB_CASE 600
+#define NB_CASE 3000
 
 class Tour;
 class Joueur;
