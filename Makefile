@@ -20,8 +20,11 @@ joueur.o: joueur.cpp joueur.hpp
 clash_Robale: affichage.cpp perso.o terrain.o joueur.o sort.o tour.o
 	g++ -g affichage.cpp -o clash_Robale -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio perso.o terrain.o joueur.o sort.o tour.o
 
+test: test.cpp perso.o terrain.o joueur.o sort.o tour.o
+	g++ test.cpp -o test perso.o terrain.o joueur.o sort.o tour.o
+
 
 clean:
 	rm -f *.o 
 vclean: clean
-	rm -f main clash_Robale
+	rm -f clash_Robale test

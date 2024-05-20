@@ -744,10 +744,6 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
 }
 
 int main(){
-        // Début du chrono
-    auto start = std::chrono::high_resolution_clock::now();
-
-    // Votre code ici
     
     char str[50]="gauche";
     Tour *T1=new Tour;

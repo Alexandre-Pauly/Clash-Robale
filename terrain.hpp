@@ -2,6 +2,7 @@
 #define TERRAIN
 #include <vector>
 #include <mutex>
+#include <memory>
 
 
 class Perso;
@@ -28,8 +29,8 @@ class Terrain{
         bool poursuite(std::vector<Perso>::iterator it);
         void attaque();
         void afficher()const;
-        void spawn_perso(Perso *p,int pos);
-        void utilisation_sort(Sort *s);
+        void spawn_perso(Perso p,int pos);
+        void utilisation_sort(Sort s);
         void effet_sort();
         void sort_units_by_position();
         void ajout_units();

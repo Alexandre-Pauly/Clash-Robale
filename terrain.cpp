@@ -9,6 +9,7 @@
 #include <chrono>
 #include <mutex>
 
+
 using namespace std;
 std::vector<ajout_troupe_sort> tableau_ajout;
 
@@ -25,13 +26,13 @@ void Terrain::sort_units_by_position() {
 }
 
 
-void Terrain::utilisation_sort(Sort *s){
-    sort.push_back(*s);
+void Terrain::utilisation_sort(Sort s){
+    sort.push_back(s);
 }
 
-void Terrain::spawn_perso(Perso *p,int pos){
-    p->add_position(pos);
-    units.push_back(*p);
+void Terrain::spawn_perso(Perso p,int pos){
+    p.add_position(pos);
+    units.push_back(p);
 }
 
 
@@ -48,7 +49,7 @@ void Terrain::verification_pv(){
 
 void Terrain::afficher()const{
     cout<<"Tour gauche  PV= "<<_joueurG->_tour->get_pv()<<"\n";
-    for (int i=0; i<NB_CASE;i++){
+    for (int i=0; i<30;i++){
         cout<<i<<": ";
         for (auto& unit : units) {
             if (unit.get_position() == i) {
@@ -142,6 +143,7 @@ void Terrain::attaque() {
         int joueur = unit.get_joueur();
         int range = unit.get_range();
         int pos = unit.get_position();
+        
         // attaque des tours sur les personnages
         if ((pos <= range_tour) && unit.get_joueur() && g)
         {
@@ -246,9 +248,6 @@ void Terrain::boucle_action(mutex * lock_unit, mutex * lock_perso){
         cpt++;
 
     }
-    tableau_ajout.clear();
-    units.clear();
-    sort.clear();
 }
 
 
@@ -260,6 +259,7 @@ int Terrain::get_pv_tour(int joueur){
         return _joueurD->_tour->get_pv();
     }
 }
+
 int Terrain::get_tour_attaque(int joueur){
     if (joueur == 0){
         return _joueurG->_tour->get_attaque();
@@ -269,39 +269,35 @@ int Terrain::get_tour_attaque(int joueur){
     }
 }
 
-void Terrain::ajout_units(){
-    for ( auto it = begin (tableau_ajout); it != end (tableau_ajout); ) {
-        cout<<it->nom<<endl;
-        switch (it->nom)
-        {
-        case 'P':
-            spawn_perso(new Pekka(it->joueur),it->position);
-            it=tableau_ajout.erase(it);
-            break;
-        case 'G':
-            spawn_perso(new Geant(it->joueur),it->position);
-            it=tableau_ajout.erase(it);
-            break;
-        case 'I':
-            spawn_perso(new Infentrie(it->joueur),it->position);
-            it=tableau_ajout.erase(it);
-            break;
-        case 'S':
-            utilisation_sort(new Soin(it->joueur,it->position));
-            it=tableau_ajout.erase(it);
-            break;
-        case 'T':
-            utilisation_sort(new Poison(it->joueur,it->position));
-            it=tableau_ajout.erase(it);
-            break;
-        case 'B':
-            utilisation_sort(new Boule_de_feu(it->joueur,it->position));
-            it=tableau_ajout.erase(it);
-            break;
-        
-        
-        default:
-            throw runtime_error("erreur ajout des personnages");
+void Terrain::ajout_units() {
+    for (auto it = begin(tableau_ajout); it!= end(tableau_ajout); ) {
+        switch (it->nom) {
+            case 'P':
+                spawn_perso(Pekka(it->joueur), it->position);
+                it = tableau_ajout.erase(it);
+                break;
+            case 'G':
+                spawn_perso(Geant(it->joueur), it->position);
+                it = tableau_ajout.erase(it);
+                break;
+            case 'I':
+                spawn_perso(Infentrie(it->joueur), it->position);
+                it = tableau_ajout.erase(it);
+                break;
+            case 'S':
+                utilisation_sort(Soin(it->joueur, it->position));
+                it = tableau_ajout.erase(it);
+                break;
+            case 'T':
+                utilisation_sort(Poison(it->joueur, it->position));
+                it = tableau_ajout.erase(it);
+                break;
+            case 'B':
+                utilisation_sort(Boule_de_feu(it->joueur, it->position));
+                it = tableau_ajout.erase(it);
+                break;
+            default:
+                throw runtime_error("erreur ajout des personnages");
         }
     }
 }
