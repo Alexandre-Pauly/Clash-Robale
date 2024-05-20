@@ -246,6 +246,9 @@ void Terrain::boucle_action(mutex * lock_unit, mutex * lock_perso){
         cpt++;
 
     }
+    tableau_ajout.clear();
+    units.clear();
+    sort.clear();
 }
 
 

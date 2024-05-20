@@ -760,7 +760,10 @@ int main(){
 
     thread t1(affichage,&terrain,&lock_unit,&lock_perso);
     terrain.boucle_action(&lock_unit,&lock_perso);
+    
     t1.join();
+    delete T1;
+    delete T2;
     
 
     return 0;
