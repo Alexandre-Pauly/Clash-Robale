@@ -14,53 +14,54 @@ L'affichage graphique à été entierement réalisé à l'aide de la bibliotèqu
 
 //-------------------------------------------------
 Presentation du jeu :
-Le jeu est inspiré de "Age of War" et de "Clash royal";
-le but est de detruire la tour de l'adversaire à l'aide
+Le jeu est inspiré de "Age of War" et de "Clash Royale";
+le but est de detruire la tour de l'adversaire à l'aide de
 multiples troupes et sorts. 
 
-Toutes les secondes, chaque joueur reçois un éléxir,
-c'est la resource du jeu.
+Toutes les secondes, chaque joueur reçoit un élixir,
+c'est la ressource du jeu.
 
-C'est alors à eux de déplacer leurs curseur afin de placer 
+C'est alors à eux de déplacer leur curseur afin de placer 
 des robots ou des sorts.
 Les sorts peuvent être placés sur tout le terrain, alors 
-que les troupes ne peuvent être placées que dans les tiers 
-respectifs de chaque joueur.
+que les troupes ne peuvent être placées que dans le tiers 
+respectif de chaque joueur.
 
 //-------------------------------------------------
-Bibiliotèque utilisé pour le projet :
+Bibliothèque utilisée pour le projet :
 -SFML2 pour l'affichage graphique
--Iostream afin d'ameliorer l'utilisation du terminal (ex : std::cout)
+-Iostream afin d'améliorer l'utilisation du terminal (ex : std::cout)
 -Thread afin d'avoir deux processus en simultané (l'affichage et le jeu + un IA plus tard ?)
 -Chrono permet de mettre en pause l'un des thread pour une durée determiné.
--Mutex permet d'ameliorer la protection des variables que les deux threads manipulent simultanément
+-Mutex permet d'ameliorer la protection des données que les deux threads manipulent
 
 //-------------------------------------------------
-Comment compiler notre programme ? Quelle biblioteque faut il avoir ?
+Comment compiler notre programme ? Quelle bibliothèque faut-il avoir ?
 
-En premier lieu il faut préalablement installer la bibliotèque SFLM.
+En premier lieu il faut préalablement installer la bibliothèque SFLM.
 
-Une fois celle-ci installé, il suffit de pull (ou telecharger) l'integralité
+Une fois celle-ci installé, il suffit de pull (ou télécharger) l'integralité
 de la branche main du git fournis. Si vous lisez ce README vous avez déja très 
-probablement deja réalisé cette étape.
+probablement déjà réalisé cette étape.
 
 Maintenant dans votre terminal, allez dans le dossier Clash-Robale puis
 effectuez les commandes suivantes : 
-$make
-$./clash_Robale
+$ make
+$ ./clash_Robale
 
 Le jeu devrait s'ouvrir. 
 
 //-------------------------------------------------
 liste des fichers du projet :
 -Makefile              simplifie la compilation du jeu
--perso.hpp/.cpp        creation de la classe et des fonctions lié aux creature du jeu
--tour.hpp/.cpp         creation de la classe et des fonctions lié à la tour de chaque joueur
--sort.hpp/.cpp         creation de la classe et des fonctions lié aux sort du jeu
--joueur.hpp/.cpp       creation de la classe et des fonctions lié aux deux joueurs du jeu
--terrain.hpp/.cpp      creation de la classe terrain et les fonctions permettant le deroulement du jeu
+-perso.hpp/.cpp        creation de la classe et des fonctions liées aux creatures du jeu
+-tour.hpp/.cpp         creation de la classe et des fonctions liées à la tour de chaque joueur
+-sort.hpp/.cpp         creation de la classe et des fonctions liées aux sort du jeu
+-joueur.hpp/.cpp       creation de la classe et des fonctions liées aux deux joueurs 
+-terrain.hpp/.cpp      creation de la classe terrain et les fonctions permettant le déroulement du jeu
 -affichage.cpp         fonction permettant l'affichage graphique du jeu. 
--dossier "affichage"   dissier contenant tout les éléments graphiques du jeu
+-dossier "affichage"   dossier contenant tous les éléments graphiques du jeu
+-test.cpp              fichier de test à compiler avec "make test"
 
 
 
@@ -68,8 +69,8 @@ liste des fichers du projet :
 Informations sur les sorts et personnages: 
 
 L'Infanterie :
-À une plus grande portée que les autres robots, mais elle à
- moins de vie et fait moins de dégat. 
+A une plus grande portée que les autres robots, mais elle a
+ moins de points de vie et fait moins de dégats. 
 
 Le Pekka :
 Il fait mal, il est rapide et il frappe ses adversaires avec vigueur.
@@ -78,18 +79,18 @@ Le Geant :
 Le sac a points de vie par excellence, sa taille est
 proportionnelle à sa lenteur. Même si ses coups font mal,
 il ne frappera que la tour de l'adversaire. Il ne 
-dédaignera même pas regarder les autres troupes qu'il 
+daignera même pas regarder les autres troupes qu'il 
 croisera et continura son chemin.
 
 Le sort de soin :
-Soigne tout les robots du joueurs qui joue le sort sur une 
+Soigne tous les robots du joueurs qui joue le sort sur une 
 zone.
 
 Le sort de poison :
-Deploit une zone toxique qui attaquera tout les adversaire 
-s'y trouvant, et qui ralentira également.
+Deploit une zone toxique qui attaquera tous les adversaires 
+s'y trouvant, et qui les ralentira également.
 
 La boule de feu :
-Appelle un meteor à tomber sur une zone afin de detruire
-les tours adversaires, peu de troupe resiste à sa 
+Appelle une météorite sur une zone afin de détruire troupes et
+tours adverses, peu de troupes resistent à sa 
 puissance.
