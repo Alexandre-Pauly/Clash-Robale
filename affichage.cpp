@@ -744,10 +744,6 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
 }
 
 int main(){
-        // Début du chrono
-    auto start = std::chrono::high_resolution_clock::now();
-
-    // Votre code ici
     
     char str[50]="gauche";
     Tour *T1=new Tour;
@@ -760,7 +756,10 @@ int main(){
 
     thread t1(affichage,&terrain,&lock_unit,&lock_perso);
     terrain.boucle_action(&lock_unit,&lock_perso);
+    
     t1.join();
+    delete T1;
+    delete T2;
     
 
     return 0;
