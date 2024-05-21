@@ -30,7 +30,7 @@ respectifs de chaque joueur.
 //-------------------------------------------------
 Bibiliotèque utilisé pour le projet :
 -SFML2 pour l'affichage graphique
--Iostream pour le codage en langage objet pour le C++
+-Iostream afin d'ameliorer l'utilisation du terminal (ex : std::cout)
 -Thread afin d'avoir deux processus en simultané (l'affichage et le jeu + un IA plus tard ?)
 -Chrono permet de mettre en pause l'un des thread pour une durée determiné.
 -Mutex permet d'ameliorer la protection des variables que les deux threads manipulent simultanément
