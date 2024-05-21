@@ -3,6 +3,8 @@
 #include "joueur.hpp"
 #include <iostream>
 
+//************* Constructeurs **************
+
 Geant::Geant(int joueur){
     _pv = 200; 
     _pv_max = 200;
@@ -72,12 +74,12 @@ Infentrie::Infentrie(const Joueur &joueur){
     _nom='I';
 }
 
-
+// attaque d'un personnage sur un autre
 void Perso::attaquer(Perso& perso){
     perso.effet_pv(_degat);
 }
 
-
+// attaque d'un personnage sur une tour
 void Perso::attaquer(Tour& tour){
     tour.effet_pv(_degat);
 }

@@ -4,6 +4,7 @@
 #include "perso.hpp"
 #include <iostream>
 
+//************* Constructeurs **************
 
 Soin::Soin(int joueur ,int position){
     _temps_effet=100;

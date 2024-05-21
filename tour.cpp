@@ -9,7 +9,7 @@ Tour::Tour(){
     _attaque = 0;
 }
 
-
+// tour attaque les personnages
 void Tour::attaquer(Perso& perso){
     perso.effet_pv(_degat);
 }
