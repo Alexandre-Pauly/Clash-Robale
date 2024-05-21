@@ -31,9 +31,6 @@ class Perso{
     }
     int get_position()const{return _position;}
     void set_vitesse(int vit){_vitesse = vit;}
-    int get_poursuite()const{return _poursuite;}
-    int set_poursuite(int poursuite){_poursuite = poursuite;}
-
     int static const range_vision=NB_CASE/10;
     void add_slowdown(){_slowdown=-4;}
     void rm_slowdown(){_slowdown=0;}
