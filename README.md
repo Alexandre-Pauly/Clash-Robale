@@ -67,7 +67,7 @@ liste des fichers du projet :
 //-------------------------------------------------
 Informations sur les sorts et personnages: 
 
-L'Inferterie :
+L'Infanterie :
 À une plus grande portée que les autres robots, mais elle à
  moins de vie et fait moins de dégat. 
 
@@ -77,8 +77,8 @@ Il fait mal, il est rapide et il frappe ses adversaires avec vigueur.
 Le Geant : 
 Le sac a points de vie par excellence, sa taille est
 proportionnelle à sa lenteur. Même si ses coups font mal,
-il ne frappera que la tour de d'adversaire. Il ne 
-dedegnera même pas regarder les autres troupes qu'il 
+il ne frappera que la tour de l'adversaire. Il ne 
+dédaignera même pas regarder les autres troupes qu'il 
 croisera et continura son chemin.
 
 Le sort de soin :
