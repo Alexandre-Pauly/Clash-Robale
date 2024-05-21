@@ -13,7 +13,7 @@
 using namespace std;
 std::vector<ajout_troupe_sort> tableau_ajout;
 
-Terrain::Terrain(Joueur & joueurG,Joueur & joueurD){
+Terrain::Terrain(Joueur & joueurG,Joueur & joueurD){        
     _joueurD=&joueurD;
     _joueurG=&joueurG;
 
@@ -26,17 +26,17 @@ void Terrain::sort_units_by_position() {
 }
 
 
-void Terrain::utilisation_sort(Sort s){
+void Terrain::utilisation_sort(Sort s){ //ajout sort dans vecteur sort
     sort.push_back(s);
 }
 
-void Terrain::spawn_perso(Perso p,int pos){
+void Terrain::spawn_perso(Perso p,int pos){ //ajout perso dans vecteur units
     p.add_position(pos);
     units.push_back(p);
 }
 
 
-void Terrain::verification_pv(){
+void Terrain::verification_pv(){        //verification de la vie des troupes et supression si plus de pv 
     for (auto it = begin (units); it != end (units); ) {
         if(it->get_pv()<=0){
             it=units.erase(it);
@@ -65,7 +65,7 @@ void Terrain::afficher()const{
 
 
 
-bool Terrain::test_proximite(std::vector<Perso>::iterator it) {
+bool Terrain::test_proximite(std::vector<Perso>::iterator it) {     // test si une troupe ou une tour adverse est a proximite d'une troupe
     int joueur = it->get_joueur();
     int range = it->get_range();
     int pos=it->get_position();
@@ -83,7 +83,7 @@ bool Terrain::test_proximite(std::vector<Perso>::iterator it) {
     return false;
 }
 
-bool Terrain::poursuite(std::vector<Perso>::iterator it) {
+bool Terrain::poursuite(std::vector<Perso>::iterator it) {  // verifie si une troupe se trouve proche derrière la troupe afin de la faire suivre
     if (it->get_nom()=='G') return false;
     int joueur = it->get_joueur();
     int range=Perso::range_vision;
@@ -117,7 +117,7 @@ bool Terrain::poursuite(std::vector<Perso>::iterator it) {
 }
 
 
-void Terrain::deplacement() {
+void Terrain::deplacement() {       // gere le deplacement ou non des troupes
     for (auto it = begin(units); it!= end(units); it++) 
     {
         if (!poursuite(it) && !test_proximite(it) )
@@ -134,7 +134,7 @@ void Terrain::deplacement() {
 }
 
 
-void Terrain::attaque() {
+void Terrain::attaque() {       // attaque troupe ou tour si a proximite
     int range_tour=_joueurD->_tour->_range;
     int g=1, d=1;
 
@@ -191,7 +191,7 @@ void Terrain::attaque() {
 }
 
 
-void Terrain::effet_sort(){
+void Terrain::effet_sort(){ //applique les sort sur les personnages dans leur zone d'action
     for (auto& unit : units) 
     {
         unit.rm_slowdown();
@@ -224,7 +224,7 @@ void Terrain::effet_sort(){
 }
 
 
-void Terrain::boucle_action(mutex * lock_unit, mutex * lock_perso){
+void Terrain::boucle_action(mutex * lock_unit, mutex * lock_perso){     // boucle gerant les actions de tous les persos sur le terrain
     int cpt=0;
     //ajout perso sort?
     while ((_joueurD->_tour->get_pv()>0)&&(_joueurG->_tour->get_pv()>0))
@@ -269,7 +269,7 @@ int Terrain::get_tour_attaque(int joueur){
     }
 }
 
-void Terrain::ajout_units() {
+void Terrain::ajout_units() {       // ajout des persos et sorts grace au tableau_ajout fourni par affichage
     for (auto it = begin(tableau_ajout); it!= end(tableau_ajout); ) {
         switch (it->nom) {
             case 'P':
