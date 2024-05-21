@@ -28,6 +28,44 @@ que les troupes ne peuvent etre placées que dans les tiers
 respetifs de joueurs du terrain.
 
 //-------------------------------------------------
+Bibiliotèque utilisé pour le projet :
+-SFML2 pour l'affichage graphique
+-Iostream pour le codage en langage objet pour le C++
+-Algorithm 
+-Thread afin d'avoir deux processus en simultané (l'affichage et le jeu)
+-Chrono permet de mettre en pause l'un des thread pour une durée determiné.
+-Mutex permet d'ameliorer la protection des variables que les deux threads manipulent simultanément
+
+//-------------------------------------------------
+Comment compiler notre programme ? Quelle biblioteque faut il avoir ?
+
+En premier lieu il faut préalablement installer la bibliotèque SFLM.
+
+Une fois celle-ci installé, il suffit de pull (ou telecharger) l'integralité
+de la branche main du git fournis. Si vous lisez ce README vous avez déja très 
+probablement deja réalisé cette étape.
+
+Maintenant dans votre terminal, allez dans le dossier Clash-Robale puis
+effectuez les commandes suivantes : 
+$make
+$./affichage
+
+Le jeu devrait s'ouvrir. 
+
+//-------------------------------------------------
+liste des fichers du projet :
+-Makefile              simplifie la compilation du jeu
+-perso.hpp/.cpp        creation de la classe et des fonctions lié aux creature du jeu
+-tour.hpp/.cpp         creation de la classe et des fonctions lié à la tour de chaque joueur
+-sort.hpp/.cpp         creation de la classe et des fonctions lié aux sort du jeu
+-joueur.hpp/.cpp       creation de la classe et des fonctions lié aux deux joueurs du jeu
+-terrain.hpp/.cpp      creation de la classe terrain et les fonctions permettant le deroulement du jeu
+-affichage.cpp         fonction permettant l'affichage graphique du jeu. 
+-dossier "affichage"   dissier contenant tout les éléments graphiques du jeu
+
+
+
+//-------------------------------------------------
 Informations sur les sorts et personnages: 
 
 L'Inferterie :
@@ -56,8 +94,3 @@ La boule de feu :
 Appelle un meteor à tomber sur une zone afin de detruire
 les tours adversaires, peu de troupe resiste à sa 
 puissance.
-
-
-
-
-

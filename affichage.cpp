@@ -516,7 +516,7 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                     ajout_troupe_sort t;
                     t.nom = 'T';
                     t.joueur = 1;
-                    t.position = position_J1;
+                    t.position = position_J2;
                     tableau_ajout.push_back(t);                   
                     if(poison[2][1]!=6*120){
                         poison[3][0]=position_J2;
