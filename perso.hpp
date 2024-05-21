@@ -52,7 +52,6 @@ class Perso{
     int _joueur;
     int _cout;
     int _range;
-    int _poursuite;
     int _position=0;
     int _slowdown=0;
     int _poursuite=0;

@@ -331,13 +331,11 @@ int affichage(Terrain* terrain,mutex * lock_unit,mutex * lock_perso)
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::SemiColon)){
                     if (position_J2<(Nombre_de_case)){
                     position_J2+=Nombre_de_case/30;
-                    std::cout<< position_J2 <<std::endl;
                     }
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Comma)){
                     if (position_J2>0){
                     position_J2-=Nombre_de_case/30;
-                    std::cout<< position_J2 <<std::endl;
                     }
                 }
 

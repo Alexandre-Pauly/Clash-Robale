@@ -47,7 +47,7 @@ probablement deja réalisé cette étape.
 Maintenant dans votre terminal, allez dans le dossier Clash-Robale puis
 effectuez les commandes suivantes : 
 $make
-$./affichage
+$./clash_Robale
 
 Le jeu devrait s'ouvrir. 
 
