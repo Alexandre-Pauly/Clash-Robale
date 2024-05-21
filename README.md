@@ -31,7 +31,6 @@ respetifs de joueurs du terrain.
 Bibiliotèque utilisé pour le projet :
 -SFML2 pour l'affichage graphique
 -Iostream pour le codage en langage objet pour le C++
--Algorithm 
 -Thread afin d'avoir deux processus en simultané (l'affichage et le jeu)
 -Chrono permet de mettre en pause l'un des thread pour une durée determiné.
 -Mutex permet d'ameliorer la protection des variables que les deux threads manipulent simultanément
